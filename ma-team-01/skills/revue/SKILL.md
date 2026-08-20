@@ -5,15 +5,16 @@ description: Présente un batch d'un coup, en lecture seule — un tableau conso
 
 # Revue — une vue, rien qu'une vue
 
-Tu rends **visible** l'état d'un batch tel qu'il est dans Drive. Tu n'écris rien, tu ne décides rien : tu lis les trois dossiers et tu **déduis** l'état de chaque post selon la règle des conventions (§6). Lis d'abord `references/conventions.md`.
+Tu rends **visible** l'état d'un batch tel qu'il est dans Drive. Tu n'écris rien, tu ne décides rien : tu lis les dossiers, tu **interroges Buffer en lecture** pour les posts programmés, et tu **déduis** l'état de chaque post selon la règle des conventions (§6). Lis d'abord `references/conventions.md`.
 
 ## Construire la vue
 
 Pour le périmètre demandé (période / marque / thème) :
 
-1. Lis `posts/<mois>/` — en ne retenant que la **dernière version** de chaque clé —, `planifie/<mois>/` et `publie/<mois>/`.
-2. Déduis l'état par clé `date_canal_slug` : présente dans `publie/` → **publié** ; sinon dans `planifie/` → **programmé** ; sinon → **brouillon**. Le dossier le plus avancé gagne.
-3. Pour un post programmé, compare `version_source` (en-tête du fichier `planifie/`) à la version courante dans `posts/` : si elle est plus ancienne, signale « la version programmée n'est plus la dernière » (message d'`erreurs.md`).
+1. Lis `posts/<mois>/` — en ne retenant que la **dernière version** de chaque clé —, `planifie/<mois>/`, `annule/<mois>/` et `publie/<mois>/`.
+2. Déduis l'état par clé `date_canal_slug` : dans `publie/` → **publié** ; sinon dans `annule/` → **annulé** ; sinon dans `planifie/` → **programmé** ; sinon → **brouillon**. Le dossier le plus avancé gagne (§6).
+3. **Vérifie les programmés auprès de Buffer** (lecture seule — la seconde vérification prévue au §6) : pour chaque post encore « programmé », interroge Buffer par son `buffer_id`. S'il n'y est plus, ne le présente pas comme programmé sûr : marque-le « à réconcilier — semble retiré de Buffer » et invite à lancer sync (qui écrira `annule/`). Tu n'écris rien toi-même.
+4. Pour un post programmé, compare `version_source` (en-tête du fichier `planifie/`) à la version courante dans `posts/` : si elle est plus ancienne, signale « la version programmée n'est plus la dernière » (message d'`erreurs.md`).
 
 ## Rendu
 
@@ -22,7 +23,8 @@ Construis un Artifact consolidé, **groupé par marque** — jamais de mélange 
 1. **Les brouillons d'abord.** Date, canal, sujet, le texte (dernière version), la mention « écrit sans exemples » le cas échéant. Si le gardefou vient de contrôler ces posts dans la conversation, reprends ses verdicts : les sûrs ensemble (présentés pour une validation en bloc), puis les signalés un par un, chacun avec sa raison en clair (« pourrait contredire l'engagement : … », « contient une image », « doute sur la marque ») et l'image affichée s'il y en a une. Sinon, montre-les comme « pas encore contrôlés » — ne les présente jamais comme sûrs, et n'invente pas de verdict : il n'est stocké nulle part pour un brouillon.
 2. **Les programmés.** Date d'envoi (`envoye_le`), verdict figé dans le fichier `planifie/`, et l'écart de version s'il existe.
 3. **Les publiés.** L'historique du périmètre, en bref.
-4. En tête : le résumé chiffré — « 14 posts : 3 publiés, 5 programmés, 6 brouillons dont 2 à regarder ».
+4. **Les annulés / à réconcilier.** Les posts retirés de Buffer (`annule/`) : une ligne chacun (« envoyé le X, retiré depuis »). Et ceux que Buffer ne connaît plus mais que Drive croit encore programmés : « à réconcilier — lance sync ».
+5. En tête : le résumé chiffré — « 14 posts : 3 publiés, 5 programmés, 6 brouillons dont 2 à regarder » ; signale à part les annulés / à réconcilier s'il y en a.
 
 ## La validation reste un geste de chat
 
@@ -34,6 +36,6 @@ Le tableau est en **lecture seule** : aucune modification ne passe par lui. Tout
 
 ## Ce que tu ne fais jamais
 
-- Écrire quoi que ce soit dans Drive : tu ne fais que lire et déduire.
+- Écrire quoi que ce soit dans Drive : tu ne fais que lire (Drive et Buffer, en lecture) et déduire — la réconciliation qui écrit `annule/` appartient à sync.
 - Inventer un verdict de gardefou : tu reprends celui de la conversation ou celui figé dans `planifie/`, sinon « pas encore contrôlé ».
 - Déclencher une publication : tu transmets le geste de l'utilisatrice au gardefou, c'est tout.

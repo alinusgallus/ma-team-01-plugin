@@ -33,10 +33,12 @@ Deux comportements du connecteur à connaître :
       2026-09/
     publie/
       2026-09/
+    annule/                                ← posts retirés de Buffer après envoi
+      2026-09/
 ```
 
 - La racine s'appelle « Ma Team » par défaut (l'utilisatrice peut choisir un autre nom au setup). Tous les skills la localisent via le Roster/config — jamais par recherche de nom dans Drive. Si la racine n'existe pas : « On dirait que le système n'est pas encore installé — lance d'abord le setup. »
-- **Le dossier mensuel est indexé sur la date de parution voulue**, pas sur la date de création. Un post écrit le 8 août pour le 10 septembre va dans `2026-09/`. Les trois dossiers `posts/`, `planifie/`, `publie/` répliquent la même structure mensuelle.
+- **Le dossier mensuel est indexé sur la date de parution voulue**, pas sur la date de création. Un post écrit le 8 août pour le 10 septembre va dans `2026-09/`. Les quatre dossiers `posts/`, `planifie/`, `publie/`, `annule/` répliquent la même structure mensuelle.
 - **Création paresseuse** : un dossier mensuel n'est créé qu'au moment d'y déposer le premier fichier — après vérification d'existence (§7).
 - `posts/` contient **tout ce qui a été écrit**, y compris ce qui est déjà paru — le nom dit la vérité à l'utilisatrice.
 - Le calendrier `sujets` est un fichier **markdown versionné**, pas un Google Sheet : le connecteur sait créer un Sheet, pas y écrire une ligne. Le markdown reste lisible par l'utilisatrice dans Drive.
@@ -125,6 +127,26 @@ Mêmes champs, plus :
 publie_le: 2026-09-10T09:15:00Z
 ```
 
+### `annule/<mois>/<clé>.md` — écrit par sync (ou sur constat de l'utilisatrice)
+
+Fichier unique, sans suffixe de version. Sa présence atteste qu'un post **envoyé à Buffer n'y est plus** : supprimé dans Buffer, ou introuvable à l'interrogation par `buffer_id`. Il prime sur `planifie/` dans la déduction d'état (§6).
+
+```
+---
+marque: camille
+canal: linkedin
+date: 2026-09-10
+theme: lancement-produit-x
+buffer_id: <l'identifiant qui n'est plus reconnu>
+envoye_le: 2026-08-08T14:32:00Z      ← repris du fichier planifie/
+annule_le: 2026-08-09T10:05:00Z
+constate_par: sync | utilisatrice
+raison: <en clair, si connue — supprimé dans Buffer, rejeté par le canal…>
+---
+```
+
+Le post reste un **brouillon** dans `posts/` (rien n'est supprimé). Pour le remettre en file, on change sa date — donc sa clé (§4) — et on repart d'un `__v1` : recréer sous la même clé fabriquerait un homonyme (§7).
+
 ### Enregistrements versionnés (`config`, `roster`, `contexte`, `channels`, `sujets`)
 
 Format libre en markdown, avec un en-tête minimal :
@@ -143,10 +165,15 @@ Il n'existe nulle part de champ « statut ». L'état d'un post se calcule à pa
 | Condition | État |
 |---|---|
 | présent dans `publie/<mois>/` | **publié** |
+| sinon, présent dans `annule/<mois>/` | **annulé** |
 | sinon, présent dans `planifie/<mois>/` | **programmé** |
 | sinon | **brouillon** |
 
-L'ordre est strict : le dossier le plus avancé gagne. Un post présent dans les trois est publié.
+L'ordre est strict : le dossier le plus avancé gagne. `publie/` prime sur tout ; `annule/` prime sur `planifie/` (un post retiré de Buffer n'est plus « programmé »).
+
+**Pourquoi `annule/` existe.** Buffer peut supprimer ou refuser un post *après* son envoi — l'utilisatrice efface une entrée dans Buffer, un canal rejette la parution. La seule présence de `planifie/` dirait alors « programmé » à tort : le fichier atteste l'envoi, pas la persistance en file. Deux garde-fous complémentaires corrigent ça :
+- **sync réconcilie** : pour chaque post programmé, il interroge Buffer par `buffer_id` ; si Buffer ne le connaît plus et que le post n'est pas paru, sync crée `annule/<mois>/<clé>.md`. L'état déduit redevient exact.
+- **revue vérifie à la lecture** : avant d'afficher un post comme « programmé », revue interroge Buffer par `buffer_id` et signale tout écart (Drive dit programmé, Buffer ne le connaît plus → « à réconcilier, lance sync »). Un « programmé » non réconcilié n'est jamais présenté comme certain.
 
 **Le verdict du gardefou (`safe` / `flagged`) ne se stocke pas non plus** pour un brouillon. Il est recalculé à chaque passage : un post modifié n'hérite jamais de son ancien contrôle. Le verdict n'est figé qu'au moment de l'envoi, dans le fichier `planifie/`, où il devient une trace historique.
 
@@ -172,6 +199,7 @@ Chaque emplacement n'a qu'un écrivain — et le geste est toujours **créer**, 
 | `exemples/` (corpus) | l'utilisatrice ; onboarding quand elle colle un post dans le chat | creation |
 | `posts/` | creation | tous |
 | `planifie/` | gardefou | revue, sync |
+| `annule/` | sync | revue |
 | `publie/` | sync | revue |
 
 La **revue** est une vue en lecture seule : elle déduit l'état (§6), elle n'écrit rien.
@@ -190,9 +218,14 @@ Toute mise à jour est une nouvelle version complète du tableau (§3).
 
 Un batch = un filtre sur les lignes du fichier `sujets` : par **période** (« septembre »), **marque** (« tout Camille »), **thème** (« la série lancement »), ou une combinaison. Il n'existe aucun traitement quotidien ni planifié : l'utilisatrice déclenche.
 
-## 11. Date et heure de publication
+## 11. Date, heure et créneaux de publication
 
-On pousse à Buffer la **date** (colonne Date). L'**heure** est décidée par Buffer via ses créneaux par canal — les skills ne calculent jamais d'horaire. Avant de pousser un batch : vérifier qu'aucun canal ne dépasse **25 posts sur un même jour** (plafond Buffer).
+On pousse à Buffer la **date** (colonne Date). L'**heure** est décidée par Buffer via ses **créneaux par canal** — les skills ne calculent jamais d'horaire, ils prennent le créneau de Buffer (dans le **fuseau réglé côté Buffer**, pas celui de l'utilisatrice).
+
+Deux conséquences concrètes, vérifiées en conditions réelles :
+
+- **Un jour sans créneau ne peut pas recevoir de post.** Si la date voulue tombe un jour où le canal n'a aucun créneau Buffer, l'envoi échoue tel quel. Ne jamais forcer une heure : signaler (message « jour sans créneau » d'`erreurs.md`) et proposer le **créneau le plus proche** existant, ou laisser l'utilisatrice ajouter un créneau dans Buffer. Le gardefou fait ce contrôle avant de pousser ; planning peut le signaler dès la prévision.
+- **Plafond** : avant de pousser un batch, vérifier qu'aucun canal ne dépasse **25 posts sur un même jour** (message « plafond Buffer »).
 
 ## 12. Authentification
 
@@ -222,3 +255,12 @@ La config globale porte la clé **`hebergement_images`** (dans `config__v<N>.md`
 - **Un hébergeur nommé** (prévu pour la phase Instagram) — le skill image dépose le visuel chez l'hébergeur et renseigne `image_url` : une URL publique et **stable** (jamais une URL signée ou expirable). Le gardefou vérifie qu'elle répond sans authentification, puis l'envoie **dans le même push** que le texte.
 
 Dans tous les cas : `image` (archive Drive) et `image_alt` (texte alternatif, écrit par creation dans la langue de la marque) sont renseignés dans le post et recopiés dans `planifie/`. Et **sync** vérifie côté Buffer que les posts déclarant un visuel en portent bien un — y compris ceux encore en file, pour rattraper un oubli avant la date de parution.
+
+## 16. Modes de publication par canal (selon ce que Buffer permet)
+
+Chaque canal a un **mode**, mais le choix **dépend de ce que Buffer autorise pour ce type de canal** — ce n'est pas libre :
+
+- **`auto`** — Buffer publie seul au créneau. C'est le **seul mode disponible pour LinkedIn** : Buffer y refuse la notification (« Notification scheduling is not supported for linkedin channels »). Conséquence à énoncer clairement à l'utilisatrice : sur un canal `auto`, **la validation au gardefou est le dernier regard humain** — ensuite le post part au créneau, sans relecture avant parution.
+- **`rappel`** — Buffer notifie l'utilisatrice, qui publie à la main. Disponible **uniquement là où Buffer le supporte** (typiquement **Instagram** en compte personnel / certains canaux). Utile quand elle veut un geste manuel (recadrage, tag natif).
+
+À l'onboarding, ne proposer `rappel` que sur un canal qui le supporte ; pour LinkedIn, enregistrer `auto` sans faire miroiter un rappel qui n'existe pas. En cas de doute, vérifier auprès de Buffer (lecture seule) — un `rappel` refusé se traite avec le message « mode rappel indisponible » d'`erreurs.md`.

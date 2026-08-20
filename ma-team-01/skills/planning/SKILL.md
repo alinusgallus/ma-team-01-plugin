@@ -22,6 +22,8 @@ Quand l'utilisatrice dit « je veux prévoir un post pour l'événement du 15/09
 4. **Propose la ligne** en clair (« Je note pour le 15/09, LinkedIn : … — ça te va ? »), ajuste, puis **écris** : lis la version courante `sujets__v<N>` (le plus haut `N` fait foi), ajoute la ligne `Date | Canal | Thème | Sujet | Notes` en mémoire, et écris le calendrier **complet** dans `sujets__v<N+1>.md` — jamais un delta.
 5. Confirme ce qui a été noté et rappelle, si utile, comment le batch la reprendra (« elle partira avec le batch de septembre »).
 
+> **Créneaux Buffer** : la parution dépendra d'un créneau Buffer ce jour-là (conventions §11). Si tu sais que le canal n'a pas de créneau le jour choisi (ex. un jeudi sans créneau LinkedIn), signale-le dès la prévision — « ce jour n'a pas de créneau Buffer, on vise plutôt tel jour ? » — pour éviter un blocage au moment de l'envoi.
+
 Sources : le contexte et le corpus de la marque, plus ce que l'utilisatrice dit — **rien d'autre** (pas de lecture de mails ni d'agenda).
 
 ## Relire / modifier le calendrier

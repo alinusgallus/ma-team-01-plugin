@@ -42,6 +42,15 @@ Chaque erreur suit trois temps, en français simple :
 **Plafond Buffer**
 > Ce batch mettrait plus de 25 posts le même jour sur le LinkedIn de Camille — Buffer refuse au-delà. Je peux étaler sur les jours voisins : dis-moi oui, ou donne-moi tes dates.
 
+**Mode rappel indisponible (sur LinkedIn)**
+> Sur LinkedIn, Buffer ne propose que la publication automatique — le mode « rappel » (où tu publierais toi-même à la main) n'existe pas pour ce canal. Concrètement : quand tu valides un post LinkedIn, c'est ta dernière relecture avant qu'il parte tout seul, au créneau. Le canal de Camille reste donc en automatique — dis-moi si ça te convient.
+
+**Jour sans créneau Buffer**
+> Ce post est prévu pour le jeudi 27/08, mais le LinkedIn de Camille n'a aucun créneau Buffer ce jour-là (ses créneaux : mardi, mercredi, vendredi). Buffer ne sait pas le caler sans horaire, et je n'en invente pas. Je peux le décaler au créneau le plus proche — dis-moi « vendredi » par exemple — ou tu ajoutes un créneau du jeudi dans Buffer et je réessaie.
+
+**Post retiré de Buffer (annulé)**
+> Le post LinkedIn de Camille du 25/08 avait bien été envoyé à Buffer, mais il n'y est plus — il a été supprimé côté Buffer. Je l'ai noté : le post redevient un brouillon dans Drive, rien n'est perdu. Pour le remettre en file, choisis-lui une nouvelle date et je le renvoie.
+
 **Post bloqué par le gardefou**
 > J'ai mis ce post de côté : il pourrait contredire un engagement de Camille (« <l'engagement> »). Relis-le individuellement — dis-moi « ok publie », « réécris en tenant compte de ça », ou « laisse-le de côté ».
 

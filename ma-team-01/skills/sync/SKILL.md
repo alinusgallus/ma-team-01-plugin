@@ -5,12 +5,12 @@ description: Rapproche Drive de la réalité — interroge Buffer pour savoir ce
 
 # Sync — attester ce qui est paru, d'après la réalité
 
-Tu confirmes les parutions **effectives** et tu avances l'historique : tu es le seul à créer dans `publie/` (conventions §8). Tu ne modifies, ne déplaces et ne supprimes rien — tu crées, c'est tout : Drive dit ce qui a été envoyé, Buffer dit ce qu'il en advient, et toi tu graves la confirmation. Lis d'abord `references/conventions.md`.
+Tu confirmes les parutions **effectives** et tu avances l'historique : tu es le seul à créer dans `publie/` et `annule/` (conventions §8). Tu ne modifies, ne déplaces et ne supprimes rien — tu crées, c'est tout : Drive dit ce qui a été envoyé, Buffer dit ce qu'il en advient, et toi tu graves la confirmation. Lis d'abord `references/conventions.md`.
 
 ## Étapes
 
 1. **Périmètre** : la ou les marques demandées, ou tout le Roster si l'utilisatrice dit « partout ».
-2. **Liste les posts programmés non encore parus** : les clés présentes dans `planifie/<mois>/` mais absentes de `publie/<mois>/`.
+2. **Liste les posts programmés à réconcilier** : les clés présentes dans `planifie/<mois>/` mais absentes de `publie/<mois>/` **et** de `annule/<mois>/` (celles déjà dans `annule/` sont réglées).
 3. **Interroge Buffer** (lecture seule), avec le `buffer_id` de chaque fichier `planifie/` : la publication est-elle confirmée sur son canal ?
 4. **Confirmé paru** → crée `publie/<mois>/<clé>.md` (format en conventions §5) : les mêmes champs que le fichier `planifie/`, plus `publie_le`. Crée le dossier mensuel s'il n'existe pas, et vérifie d'abord que le fichier n'existe pas déjà (idempotence, conventions §7). L'historique de la marque se construit par ajout.
 5. **Pas encore parti** (date future, file d'attente) → ne crée rien, sans bruit.
@@ -18,7 +18,7 @@ Tu confirmes les parutions **effectives** et tu avances l'historique : tu es le 
 7. **Posts avec visuel** (conventions §15) : pour chaque fichier `planifie/` dont l'en-tête déclare une image, vérifie auprès de Buffer que le post porte bien un média — **y compris les posts encore en file**, pas seulement les parus.
    - **En file, sans média** → rappel doux, message « visuel non attaché » d'`erreurs.md` : le visuel est dans Drive, il suffit de l'attacher dans Buffer avant la date. C'est le moment de rattraper l'oubli.
    - **Paru, sans média** → anomalie : dis-le en clair (le post est paru en texte seul). Le fichier `publie/` se crée quand même — il atteste la parution, pas sa complétude.
-8. **Anomalie** (un `buffer_id` que Buffer ne connaît plus, un envoi qui semble perdu) → signale-le en clair, sans rien créer.
+8. **Post retiré de Buffer** — un `buffer_id` que Buffer ne connaît plus, alors que le post n'est pas dans `publie/` : c'est une **annulation** (supprimé dans Buffer, rejeté par le canal). Crée `annule/<mois>/<clé>.md` (format §5) — dossier mensuel créé au besoin, idempotence d'abord (§7) — en reprenant `buffer_id` et `envoye_le` du fichier `planifie/`, avec `annule_le`, `constate_par: sync`, et la `raison` si tu la connais. Dis-le en clair : le post redevient un brouillon dans `posts/`, il faudra une nouvelle date pour le renvoyer (message « post retiré de Buffer » d'`erreurs.md`). Ne supprime **jamais** le fichier `planifie/` (rien n'est supprimé) — c'est `annule/` qui prime désormais dans la déduction (§6).
 
 ## Le bonus corpus
 

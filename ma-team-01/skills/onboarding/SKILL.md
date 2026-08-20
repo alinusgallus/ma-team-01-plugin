@@ -52,12 +52,13 @@ Pose peu de questions, une par une, et reformule pour valider. **Ce que l'étape
 ### 3. Capturer les canaux
 
 - Liste les canaux de la marque (LinkedIn, Instagram…).
-- Pour chaque canal : **mode `auto`** (Buffer publie seul) ou **mode `rappel`** (Buffer notifie, l'utilisatrice publie à la main). Explique le compromis en une phrase chacun.
-- **Vérifie l'accessibilité** (lecture seule via le MCP Buffer) : le canal est-il bien connecté ? Sinon → message « canal non connecté » d'`erreurs.md`, sans bloquer le reste de l'onboarding.
+- **Le mode dépend de ce que Buffer permet, pas d'un libre choix** (conventions §16). **LinkedIn n'existe qu'en `auto`** — Buffer y refuse le rappel. Enregistre `auto` pour LinkedIn et dis-le clairement : « sur LinkedIn, quand tu valideras un post, c'est ta dernière relecture — ensuite Buffer le publie seul au créneau. » Ne propose `rappel` (Buffer notifie, elle publie à la main) que là où Buffer le supporte, typiquement Instagram ; en cas de doute, vérifie auprès de Buffer plutôt que de promettre un rappel qui sera refusé (message « mode rappel indisponible » d'`erreurs.md`).
+- **Vérifie les créneaux** (lecture seule) : un canal sans créneau Buffer ne pourra caler aucun post (conventions §11). Signale-le pour qu'elle en règle au moins un dans Buffer.
+- **Vérifie l'accessibilité** : le canal est-il bien connecté ? Sinon → message « canal non connecté » d'`erreurs.md`, sans bloquer le reste de l'onboarding.
 
 ### 4. Créer l'arborescence
 
-Dans la racine : `<marque>/` avec `contexte__v1.md`, `channels__v1.md`, `sujets__v1.md` (le calendrier en markdown : un tableau `Date | Canal | Thème | Sujet | Notes`, vide), et les dossiers `exemples/`, `posts/`, `planifie/`, `publie/`. **Pas de dossiers mensuels** : ils se créent à la volée au premier dépôt (conventions §2). Avant chaque création, vérifie par `search_files` que le titre n'existe pas déjà (idempotence, conventions §7).
+Dans la racine : `<marque>/` avec `contexte__v1.md`, `channels__v1.md`, `sujets__v1.md` (le calendrier en markdown : un tableau `Date | Canal | Thème | Sujet | Notes`, vide), et les dossiers `exemples/`, `posts/`, `planifie/`, `publie/`, `annule/`. **Pas de dossiers mensuels** : ils se créent à la volée au premier dépôt (conventions §2). Avant chaque création, vérifie par `search_files` que le titre n'existe pas déjà (idempotence, conventions §7).
 
 **Option : le contexte tenu par l'utilisatrice.** Le système lit tout son Drive ; si elle préfère rédiger et entretenir elle-même le document de contexte de sa marque, accepte — c'est même recommandé, la définition de la marque reste entre ses mains. Dans ce cas `contexte__v1.md` est un simple renvoi (« le contexte de cette marque vit dans <document> »), et creation comme gardefou liront ce document directement, à chaque usage.
 
