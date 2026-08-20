@@ -10,6 +10,7 @@
 - **Plan / fichier `sujets`** — le calendrier éditorial d'une marque : un fichier markdown versionné (`sujets__v<N>.md`), une ligne par futur post (`Date | Canal | Thème | Sujet | Notes`). La **Date est la date de parution voulue**. Rempli par le skill planning, jamais à la main ; chaque modification est une nouvelle version complète.
 - **Batch** — l'unité de production et de relecture : un filtre sur les lignes du Plan par période, marque et/ou thème. Déclenché à la demande — il n'existe aucun traitement quotidien.
 - **Corpus** — le dossier `exemples/` d'une marque : ses ~15–30 meilleurs posts, validés. **C'est le corpus qui EST la voix** ; le contexte ne fait que poser le cadre.
+- **Bibliothèque d'images** — le dossier `images/` d'une marque : ses photos et visuels, déposés par l'utilisatrice seule (depuis son ordinateur ou son téléphone, via Drive). Première source des visuels de posts — fournir prime sur décliner, qui prime sur générer (conventions §15). Aucun skill n'y écrit.
 - **Contexte** — le fichier `contexte__v<N>.md` d'une marque (ou un document qu'elle tient elle-même et que le système lit) : ton, ligne éditoriale, engagements. Un cadre et des contraintes — pas un modèle de style.
 - **Engagements** — les propositions non négociables d'une marque, vérifiées en dur par le gardefou. Une contradiction est l'erreur la plus grave que le système puisse commettre.
 - **Clé d'un post** — le triplet `date_canal_slug`, invariant à travers `posts/`, `planifie/` et `publie/`. C'est elle, et elle seule, qui relie les trois dossiers.

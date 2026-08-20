@@ -51,7 +51,7 @@ Depuis le marketplace GitHub :
 | **onboarding** | Ajoute une marque : arborescence, contexte, canaux et mode de publication. |
 | **planning** | Remplit le calendrier éditorial (`sujets`) à partir de ce que vous dites. |
 | **creation** | Rédige les brouillons — par batch depuis le calendrier, ou une idée à l'unité — par analogie avec le corpus. |
-| **image** | Fournit le visuel : généré de zéro, ou décliné d'une vraie photo de la marque. |
+| **image** | Fournit le visuel : d'abord vos propres photos (bibliothèque `images`), sinon une déclinaison, sinon généré de zéro. |
 | **gardefou** | Contrôle chaque post (bonne marque ? engagement respecté ? image ?), puis publie sur votre validation. Seul écrivain de l'état des posts. |
 | **revue** | Présente un batch d'un coup, en lecture seule : posts sûrs groupés, posts signalés un par un. |
 | **sync** | Confirme ce qui est réellement paru et construit l'historique (`publie/`, `annule/`). |
@@ -66,17 +66,19 @@ Ma Team/
     channels__v1.md             ← canaux → mode auto / rappel
     sujets__v1.md               ← calendrier : Date | Canal | Thème | Sujet | Notes
     exemples/                   ← votre corpus (le levier de qualité)
+    images/                     ← vos photos et visuels (la bibliothèque)
     posts/  planifie/  publie/  annule/   ← le cycle de vie, par mois (2026-09/…)
 ```
 
 Rien n'est jamais réécrit ni supprimé : toute évolution est une **nouvelle version** (`__v2`, `__v3`…), et l'état d'un post se lit à sa présence dans les dossiers.
 
-Drive fait foi ; Buffer n'est qu'un canal de sortie. Vous n'ouvrez ces dossiers presque jamais — sauf `exemples`, pour y déposer vos meilleurs posts.
+Drive fait foi ; Buffer n'est qu'un canal de sortie. Vous n'ouvrez ces dossiers presque jamais — sauf `exemples`, pour y déposer vos meilleurs posts, et `images`, pour y déposer vos photos.
 
 ## À savoir, honnêtement
 
 - **La qualité dépend du corpus.** Donnez des exemples dont vous êtes fière et le système écrit dans votre voix ; donnez seulement une description de ton et vous obtiendrez un imitateur plausible. Le système vous prévient quand il écrit « sans exemples ».
 - **Relire un batch reste du temps.** Le système supprime la rédaction, pas la relecture — un gros batch fait des dizaines de posts. C'est vous qui choisissez quand.
 - **Les sujets restent votre rôle.** Le système n'invente jamais un sujet : un calendrier vide ne génère rien. (Mais vous le remplissez en parlant.)
+- **Un visuel s'attache dans Buffer**, une fois le texte programmé — un geste, guidé : le composer de Buffer pioche directement dans votre Drive (intégration à autoriser une fois, sur ordinateur). Le système vérifie ensuite qu'aucun visuel prévu n'a été oublié.
 - **Mode « rappel » Instagram = gestes manuels** sur le téléphone, avec en contrepartie le recadrage et le tagging natifs.
 - **Limite Buffer** : 25 posts par jour et par canal — le système vérifie avant d'envoyer.

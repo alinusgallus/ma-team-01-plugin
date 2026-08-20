@@ -31,10 +31,10 @@ Chaque erreur suit trois temps, en français simple :
 > Le corpus de Camille ne compte que N posts — je m'en suis inspiré, mais la voix s'affinera à mesure qu'il grandit. Chaque post que tu valides peut le rejoindre.
 
 **Image manquante pour Instagram**
-> Ce post Instagram n'a pas d'image, et Instagram n'accepte pas de post sans image. Dis-moi si je la génère, si je pars d'une photo de la marque, ou si tu préfères passer ce post en mode rappel.
+> Ce post Instagram n'a pas d'image, et Instagram n'accepte pas de post sans image. Tu as une photo pour lui ? Dépose-la dans le dossier `images` de la marque et dis-le-moi. Sinon je peux partir d'une de tes photos, ou en générer une — ou tu passes ce post en mode rappel.
 
 **Visuel non attaché (rappel, pas une erreur)**
-> Le post LinkedIn de Camille du 10/09 est programmé dans Buffer, mais son visuel n'y est pas encore attaché. L'image est prête dans Drive — ouvre le post dans Buffer, ajoute-la, et dis-moi « c'est fait ». S'il part comme ça, il paraîtra en texte seul.
+> Le post LinkedIn de Camille du 10/09 est programmé dans Buffer, mais son visuel n'y est pas encore attaché. L'image est prête dans Drive — ouvre le post dans Buffer, ajoute-la (dans le composer, tu peux la prendre directement depuis Google Drive), et dis-moi « c'est fait ». S'il part comme ça, il paraîtra en texte seul.
 
 **URL d'image inaccessible**
 > Le visuel de ce post est hébergé à une adresse qui ne répond pas publiquement — Buffer ne pourrait pas le récupérer au moment de la parution. Le post n'est pas parti, rien n'est perdu. Dis-moi si je réessaie avec un autre hébergement, ou si tu préfères l'attacher toi-même dans Buffer.

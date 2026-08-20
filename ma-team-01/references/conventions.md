@@ -27,6 +27,7 @@ Deux comportements du connecteur à connaître :
     channels__v1.md
     sujets__v1.md                           ← le calendrier, en markdown
     exemples/                               ← le corpus, alimenté par l'utilisatrice
+    images/                                 ← sa bibliothèque de photos et visuels, alimentée par elle seule
     posts/                                  ← tout ce qui a été écrit, versionné
       2026-09/                              ← dossier mensuel : AAAA-MM
     planifie/
@@ -197,6 +198,7 @@ Chaque emplacement n'a qu'un écrivain — et le geste est toujours **créer**, 
 | `contexte`, `channels` | onboarding — **ou l'utilisatrice à la main** (voir ci-dessous) | creation, gardefou |
 | `sujets` | planning | creation |
 | `exemples/` (corpus) | l'utilisatrice ; onboarding quand elle colle un post dans le chat | creation |
+| `images/` (bibliothèque) | l'utilisatrice, seule | image, creation, gardefou |
 | `posts/` | creation | tous |
 | `planifie/` | gardefou | revue, sync |
 | `annule/` | sync | revue |
@@ -251,10 +253,18 @@ Deux faits techniques commandent tout le reste :
 
 La config globale porte la clé **`hebergement_images`** (dans `config__v<N>.md`) :
 
-- **`aucun`** (défaut) — le visuel est archivé dans Drive à côté du post ; le **texte part seul** à Buffer, et l'utilisatrice attache le visuel **dans l'interface de Buffer**, au moment où elle valide le post — guidée par le gardefou. C'est le mode prévu tant que les posts à visuel restent minoritaires (LinkedIn).
+- **`aucun`** (défaut) — le visuel est archivé dans Drive à côté du post ; le **texte part seul** à Buffer, et l'utilisatrice attache le visuel **dans l'interface de Buffer**, au moment où elle valide le post — guidée par le gardefou. Le composer de Buffer sait **piocher le fichier directement dans Google Drive** (intégration à autoriser une fois dans Buffer ; sur ordinateur seulement, un fichier à la fois) : pas de téléchargement local, le visuel part de la bibliothèque `images/` ou de l'archive vers Buffer en un geste, et il est alors stocké par Buffer. C'est le mode prévu tant que les posts à visuel restent minoritaires (LinkedIn).
 - **Un hébergeur nommé** (prévu pour la phase Instagram) — le skill image dépose le visuel chez l'hébergeur et renseigne `image_url` : une URL publique et **stable** (jamais une URL signée ou expirable). Le gardefou vérifie qu'elle répond sans authentification, puis l'envoie **dans le même push** que le texte.
 
-Dans tous les cas : `image` (archive Drive) et `image_alt` (texte alternatif, écrit par creation dans la langue de la marque) sont renseignés dans le post et recopiés dans `planifie/`. Et **sync** vérifie côté Buffer que les posts déclarant un visuel en portent bien un — y compris ceux encore en file, pour rattraper un oubli avant la date de parution.
+**D'où vient le visuel** — trois sources, dans cet ordre de préférence :
+
+1. **Fournie** — l'utilisatrice a déjà l'image : elle vit dans la bibliothèque `images/` de la marque (ou elle l'y dépose sur le moment). On l'utilise telle quelle, `image` pointe dessus — pas de copie : le fichier est déjà dans Drive. C'est la source la plus sûre du circuit : rien à créer côté connecteur.
+2. **Déclinée** (retouch) — une variation d'une image de la bibliothèque (recadrage, habillage), quand elle a de la matière mais pas le visuel exact. Le résultat s'archive à côté du post.
+3. **Générée** — de zéro, seulement si la bibliothèque n'offre rien et que le sujet s'y prête.
+
+Quand un post réclame un visuel, on lui demande **d'abord** si elle a une image — générer est le recours, pas le défaut. La bibliothèque `images/` suit la règle du corpus : elle y dépose (ordinateur ou téléphone, via Drive), aucun skill n'y écrit ni n'y supprime. Une image collée dans le chat sert à en parler et à écrire l'`image_alt`, mais on lui demande de la déposer aussi dans `images/` : c'est le fichier Drive que `image` peut pointer, et ce pointeur est ce qui déclenche le flag du gardefou et la vérification de sync.
+
+Dans tous les cas : `image` (le fichier dans Drive — bibliothèque ou archive) et `image_alt` (texte alternatif, écrit par creation dans la langue de la marque) sont renseignés dans le post et recopiés dans `planifie/`. Et **sync** vérifie côté Buffer que les posts déclarant un visuel en portent bien un — y compris ceux encore en file, pour rattraper un oubli avant la date de parution.
 
 ## 16. Modes de publication par canal (selon ce que Buffer permet)
 

@@ -58,7 +58,7 @@ Pose peu de questions, une par une, et reformule pour valider. **Ce que l'étape
 
 ### 4. Créer l'arborescence
 
-Dans la racine : `<marque>/` avec `contexte__v1.md`, `channels__v1.md`, `sujets__v1.md` (le calendrier en markdown : un tableau `Date | Canal | Thème | Sujet | Notes`, vide), et les dossiers `exemples/`, `posts/`, `planifie/`, `publie/`, `annule/`. **Pas de dossiers mensuels** : ils se créent à la volée au premier dépôt (conventions §2). Avant chaque création, vérifie par `search_files` que le titre n'existe pas déjà (idempotence, conventions §7).
+Dans la racine : `<marque>/` avec `contexte__v1.md`, `channels__v1.md`, `sujets__v1.md` (le calendrier en markdown : un tableau `Date | Canal | Thème | Sujet | Notes`, vide), et les dossiers `exemples/`, `images/`, `posts/`, `planifie/`, `publie/`, `annule/`. **Pas de dossiers mensuels** : ils se créent à la volée au premier dépôt (conventions §2). Avant chaque création, vérifie par `search_files` que le titre n'existe pas déjà (idempotence, conventions §7).
 
 **Option : le contexte tenu par l'utilisatrice.** Le système lit tout son Drive ; si elle préfère rédiger et entretenir elle-même le document de contexte de sa marque, accepte — c'est même recommandé, la définition de la marque reste entre ses mains. Dans ce cas `contexte__v1.md` est un simple renvoi (« le contexte de cette marque vit dans <document> »), et creation comme gardefou liront ce document directement, à chaque usage.
 
@@ -71,6 +71,8 @@ Le Roster ne se modifie pas : lis la version courante `roster__v<N>.md`, ajoute 
 Si l'étape 1 a déjà livré des posts d'exemple, dis où on en est (« on démarre avec N exemples ») avant de demander la suite. Puis explique, sans détour :
 
 > Dernière chose, la plus importante : dépose dans le dossier `exemples` de cette marque 15 à 30 posts dont tu es fière — c'est **ça** qui donnera sa voix aux brouillons, pas la description du ton. Tu peux commencer avec moins : je te dirai franchement quand un post est écrit « sans exemples ». Et chaque post que tu valideras pourra enrichir ce corpus.
+
+Mentionne aussi, en une phrase, la bibliothèque d'images : « Et si tu as des photos de la marque — produits, coulisses, visuels déjà faits — dépose-les dans son dossier `images` : je te les proposerai en premier pour les posts à visuel, avant de générer quoi que ce soit. »
 
 **Cas du démarrage à zéro** — si la marque n'a aucun post passé à déposer (marque neuve, historique introuvable), ne la laisse pas partir avec un corpus vide : propose d'**écrire ensemble, ici même, 2 ou 3 posts fondateurs**. Elle donne un sujet qui lui tient à cœur, tu rédiges depuis le contexte, elle corrige dans la conversation jusqu'à dire « ça, c'est nous » — et chaque post qu'elle approuve est déposé dans `exemples/`. Trois posts fondateurs valent mieux que zéro : c'est la première voix du corpus, et elle grandira à chaque validation.
 
