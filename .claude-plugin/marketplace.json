@@ -1,0 +1,13 @@
+{
+  "name": "ma-team-01",
+  "owner": {
+    "name": "Alain Gall"
+  },
+  "plugins": [
+    {
+      "name": "ma-team-01",
+      "source": "./ma-team-01",
+      "description": "Rédaction et publication de posts sociaux pour un portefeuille de marques, pilotées en français dans le chat. Google Drive est la source de vérité unique ; Buffer est le canal de publication. Huit skills : setup, onboarding, planning, creation, image, gardefou, revue, sync."
+    }
+  ]
+}
