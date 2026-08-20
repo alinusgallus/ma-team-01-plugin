@@ -54,20 +54,22 @@ Depuis le marketplace GitHub :
 | **image** | Fournit le visuel : généré de zéro, ou décliné d'une vraie photo de la marque. |
 | **gardefou** | Contrôle chaque post (bonne marque ? engagement respecté ? image ?), puis publie sur votre validation. Seul écrivain de l'état des posts. |
 | **revue** | Présente un batch d'un coup, en lecture seule : posts sûrs groupés, posts signalés un par un. |
-| **sync** | Confirme ce qui est réellement paru et construit l'historique (`publié`). |
+| **sync** | Confirme ce qui est réellement paru et construit l'historique (`publie/`, `annule/`). |
 
 ## Ce que Drive contient
 
 ```
 Ma Team/
-  config.md, roster.md          ← global
+  config__v1.md, roster__v1.md  ← global
   <marque>/
-    contexte.md                 ← ton, ligne éditoriale, engagements
-    channels.md                 ← canaux → mode auto / rappel
-    sujets  (Google Sheet)      ← calendrier : Date | Canal | Thème | Sujet | Notes
+    contexte__v1.md             ← ton, ligne éditoriale, engagements
+    channels__v1.md             ← canaux → mode auto / rappel
+    sujets__v1.md               ← calendrier : Date | Canal | Thème | Sujet | Notes
     exemples/                   ← votre corpus (le levier de qualité)
-    brouillon/  planifié/  publié/   ← le cycle de vie des posts
+    posts/  planifie/  publie/  annule/   ← le cycle de vie, par mois (2026-09/…)
 ```
+
+Rien n'est jamais réécrit ni supprimé : toute évolution est une **nouvelle version** (`__v2`, `__v3`…), et l'état d'un post se lit à sa présence dans les dossiers.
 
 Drive fait foi ; Buffer n'est qu'un canal de sortie. Vous n'ouvrez ces dossiers presque jamais — sauf `exemples`, pour y déposer vos meilleurs posts.
 

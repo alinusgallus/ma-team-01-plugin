@@ -13,7 +13,7 @@ Chaque erreur suit trois temps, en français simple :
 ## Messages types
 
 **Canal non connecté**
-> Ce post n'a pas pu partir : le canal Instagram de Camille n'est pas connecté à Buffer. Ouvre les réglages de Cowork, autorise Buffer pour ce compte, puis dis-moi « réessaie ». Les autres posts du batch sont partis normalement.
+> Ce post n'a pas pu partir : le canal Instagram de Camille n'est pas connecté à Buffer. Ouvre Buffer, reconnecte ce canal (Channels → Connect), puis dis-moi « réessaie ». Les autres posts du batch sont partis normalement.
 
 **Système non installé**
 > On dirait que le système n'est pas encore installé — il n'y a pas de dossier racine dans ton Drive. Dis-moi « installe le système » et je m'en occupe.

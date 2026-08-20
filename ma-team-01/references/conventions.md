@@ -264,3 +264,24 @@ Chaque canal a un **mode**, mais le choix **dépend de ce que Buffer autorise po
 - **`rappel`** — Buffer notifie l'utilisatrice, qui publie à la main. Disponible **uniquement là où Buffer le supporte** (typiquement **Instagram** en compte personnel / certains canaux). Utile quand elle veut un geste manuel (recadrage, tag natif).
 
 À l'onboarding, ne proposer `rappel` que sur un canal qui le supporte ; pour LinkedIn, enregistrer `auto` sans faire miroiter un rappel qui n'existe pas. En cas de doute, vérifier auprès de Buffer (lecture seule) — un `rappel` refusé se traite avec le message « mode rappel indisponible » d'`erreurs.md`.
+
+## 17. Concision — répondre court
+
+L'utilisatrice pilote ; elle n'a pas besoin d'un rapport ni d'un cours. Chaque réponse est **courte et actionnable** :
+
+- **Confirme en une ou deux phrases** ce qui a été fait, puis propose la suite en une ligne. Pas de préambule, pas de récapitulatif du modèle de stockage, pas de justification de l'architecture.
+- **N'explique un mécanisme que si elle le demande**, ou si un choix a une conséquence qu'elle doit connaître pour décider (ex. « sur LinkedIn, valider = publier »). Dans ce cas, une phrase suffit.
+- **Une question à la fois**, formulée simplement. Quand une recommandation claire suffit, ne déroule pas toutes les options.
+- Les tableaux et récaps chiffrés servent une **revue** de batch ; ailleurs, ils alourdissent. Va à l'essentiel.
+
+Exception : la **restitution** en onboarding (ce qui a été retenu / écarté d'un guide) reste explicite — mais tenue, en puces courtes, pas en dissertation.
+
+## 18. Économie d'appels — lire par lot
+
+La lenteur vient des allers-retours, pas du volume. Trois règles, valables pour tous les skills :
+
+- **Une seule liste par dossier et par batch.** Pour résoudre les versions (§3) et vérifier l'idempotence (§7) sur plusieurs fichiers d'un même dossier, ne fais pas une recherche par titre : liste le dossier une fois (`search_files` avec le `parentId`, sans filtre de titre) et déduis tout de cette liste — versions courantes, existences, homonymes. Une recherche par fichier sur un batch de vingt posts, c'est vingt allers-retours pour ce qu'une liste donne en un.
+- **Buffer s'interroge par canal, pas par post.** Pour vérifier des posts programmés (revue, sync), une requête de **liste** par canal couvre tout le lot : rapprocher les `buffer_id` des fichiers `planifie/` de cette liste. Ne redescendre à l'interrogation individuelle par `buffer_id` que pour les posts absents de la liste (candidats à l'annulation) — pour confirmer avant de conclure.
+- **Les lectures indépendantes se font en parallèle** : le corpus d'une marque, les quatre dossiers d'état d'un mois, les contextes de plusieurs marques d'un batch — rien n'impose de les lire l'un après l'autre.
+
+Aucune de ces règles ne change ce qui est écrit ni quand : elles ne touchent que le nombre d'appels pour lire la même vérité.

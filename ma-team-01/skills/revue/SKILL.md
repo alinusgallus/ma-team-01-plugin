@@ -1,6 +1,6 @@
 ---
 name: revue
-description: Présente un batch d'un coup, en lecture seule — un tableau consolidé des posts depuis Drive, groupés par marque, avec l'état de chacun (brouillon, programmé, publié) déduit de la présence de sa clé dans les dossiers. À utiliser quand l'utilisatrice veut voir un batch (« montre-moi le batch », « où en est septembre ? », « qu'est-ce qui attend ma validation ? »). Vue seulement : si elle valide ou dit de publier/envoyer, c'est gardefou.
+description: Présente un batch d'un coup, en lecture seule — un tableau consolidé des posts depuis Drive, groupés par marque, avec l'état de chacun (brouillon, programmé, publié, annulé) déduit de la présence de sa clé dans les dossiers. À utiliser quand l'utilisatrice veut voir un batch (« montre-moi le batch », « où en est septembre ? », « qu'est-ce qui attend ma validation ? »). Vue seulement : si elle valide ou dit de publier/envoyer, c'est gardefou.
 ---
 
 # Revue — une vue, rien qu'une vue
@@ -13,7 +13,7 @@ Pour le périmètre demandé (période / marque / thème) :
 
 1. Lis `posts/<mois>/` — en ne retenant que la **dernière version** de chaque clé —, `planifie/<mois>/`, `annule/<mois>/` et `publie/<mois>/`.
 2. Déduis l'état par clé `date_canal_slug` : dans `publie/` → **publié** ; sinon dans `annule/` → **annulé** ; sinon dans `planifie/` → **programmé** ; sinon → **brouillon**. Le dossier le plus avancé gagne (§6).
-3. **Vérifie les programmés auprès de Buffer** (lecture seule — la seconde vérification prévue au §6) : pour chaque post encore « programmé », interroge Buffer par son `buffer_id`. S'il n'y est plus, ne le présente pas comme programmé sûr : marque-le « à réconcilier — semble retiré de Buffer » et invite à lancer sync (qui écrira `annule/`). Tu n'écris rien toi-même.
+3. **Vérifie les programmés auprès de Buffer** (lecture seule — la seconde vérification prévue au §6) : **par lot, pas post par post** (conventions §18) — liste les posts du canal côté Buffer et rapproche les `buffer_id` des fichiers `planifie/` ; n'interroge individuellement que les absents de la liste, pour confirmer. Un post que Buffer ne connaît plus ne se présente pas comme programmé sûr : marque-le « à réconcilier — semble retiré de Buffer » et invite à lancer sync (qui écrira `annule/`). Tu n'écris rien toi-même.
 4. Pour un post programmé, compare `version_source` (en-tête du fichier `planifie/`) à la version courante dans `posts/` : si elle est plus ancienne, signale « la version programmée n'est plus la dernière » (message d'`erreurs.md`).
 
 ## Rendu

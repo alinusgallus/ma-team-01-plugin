@@ -11,7 +11,7 @@ Tu confirmes les parutions **effectives** et tu avances l'historique : tu es le 
 
 1. **Périmètre** : la ou les marques demandées, ou tout le Roster si l'utilisatrice dit « partout ».
 2. **Liste les posts programmés à réconcilier** : les clés présentes dans `planifie/<mois>/` mais absentes de `publie/<mois>/` **et** de `annule/<mois>/` (celles déjà dans `annule/` sont réglées).
-3. **Interroge Buffer** (lecture seule), avec le `buffer_id` de chaque fichier `planifie/` : la publication est-elle confirmée sur son canal ?
+3. **Interroge Buffer** (lecture seule), **par lot** (conventions §18) : une liste des posts par canal (envoyés et en file), puis rapproche les `buffer_id` des fichiers `planifie/`. N'interroge individuellement par `buffer_id` que les posts absents de la liste, pour confirmer leur sort avant de conclure à une annulation (étape 8).
 4. **Confirmé paru** → crée `publie/<mois>/<clé>.md` (format en conventions §5) : les mêmes champs que le fichier `planifie/`, plus `publie_le`. Crée le dossier mensuel s'il n'existe pas, et vérifie d'abord que le fichier n'existe pas déjà (idempotence, conventions §7). L'historique de la marque se construit par ajout.
 5. **Pas encore parti** (date future, file d'attente) → ne crée rien, sans bruit.
 6. **Cas `rappel` / publication native** : Buffer ne sait pas toujours ce qui a été publié à la main depuis le téléphone. Pour ces posts, demande simplement : « Le post Instagram de Camille du 12/09, tu l'as publié ? » — sa confirmation vaut vérité, et tu crées le fichier `publie/` (avec la date qu'elle indique, ou la date prévue à défaut). Sans réponse, rien n'est créé : mieux vaut un historique incomplet qu'un historique inventé.
