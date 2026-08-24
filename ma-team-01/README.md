@@ -7,6 +7,7 @@ Conçu pour une opératrice non-technique : pas de fichier à éditer à la main
 ## Ce que ça fait
 
 - **Rédige par analogie avec vos meilleurs posts** (le « corpus »), marque par marque — pas à partir d'une description abstraite de votre style. La qualité vient des exemples que vous fournissez, et s'améliore à chaque post validé.
+- **Retient vos corrections durables** : « celui-ci, plus court » retouche un post ; « toujours trop long » — avec votre accord explicite — devient un retour appliqué à tous les posts suivants de la marque. Vous ne répétez pas deux fois la même remarque.
 - **Gère plusieurs marques en isolation totale** : chaque marque a son dossier, sa voix, ses canaux. Un garde-fou traite le pire risque — publier sur le mauvais compte — comme une erreur de classe désastre.
 - **Travaille par batch, à la demande** : « Génère les posts de septembre pour Camille » produit tous les brouillons d'un coup ; vous validez en bloc les posts sûrs et un par un les posts signalés.
 - **Publie via Buffer** à la date prévue par votre calendrier ; l'heure vient des créneaux Buffer de chaque canal.
@@ -65,6 +66,7 @@ Ma Team/
     contexte__v1.md             ← ton, ligne éditoriale, engagements
     channels__v1.md             ← canaux → mode auto / rappel
     sujets__v1.md               ← calendrier : Date | Canal | Thème | Sujet | Notes
+    retours__v1.md              ← vos corrections durables (« toujours plus court »…)
     exemples/                   ← votre corpus (le levier de qualité)
     images/                     ← vos photos et visuels (la bibliothèque)
     posts/  planifie/  publie/  annule/   ← le cycle de vie, par mois (2026-09/…)

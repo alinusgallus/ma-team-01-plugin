@@ -1,6 +1,6 @@
 ---
 name: creation
-description: Rédige les brouillons de posts d'une marque — soit un batch depuis le calendrier (« génère les posts de septembre pour Camille »), soit une idée à l'unité (« j'ai une idée de post pour … »). Écrit par analogie avec le corpus d'exemples de la marque et dépose les fichiers versionnés dans posts/. À utiliser pour toute demande de rédaction ou de réécriture de post. « Je veux prévoir / planifier un post pour plus tard » sans demande de rédaction immédiate = planning, pas creation. Ne publie ni n'envoie jamais rien : « publie », « valide le batch », « envoie » = gardefou.
+description: Rédige les brouillons de posts d'une marque — soit un batch depuis le calendrier (« génère les posts de septembre pour Camille »), soit une idée à l'unité (« j'ai une idée de post pour … »). Écrit par analogie avec le corpus d'exemples de la marque et dépose les fichiers versionnés dans posts/. À utiliser pour toute demande de rédaction ou de réécriture de post, et pour retenir une correction durable de l'utilisatrice (« toujours plus court », « arrête les emojis », « retiens ça pour les prochains posts »). « Je veux prévoir / planifier un post pour plus tard » sans demande de rédaction immédiate = planning, pas creation. Ne publie ni n'envoie jamais rien : « publie », « valide le batch », « envoie » = gardefou.
 ---
 
 # Creation — du sujet au brouillon, par analogie
@@ -17,7 +17,7 @@ Dans les deux cas **la marque doit être nommée**. Si elle ne l'est pas, demand
 
 ## Pour chaque sujet
 
-1. **Charge** le contexte de la marque (cadre + engagements) — la dernière version de `contexte__v<N>.md`, ou le document qu'elle tient elle-même si le contexte y renvoie — et son dossier `exemples/`.
+1. **Charge** le contexte de la marque (cadre + engagements) — la dernière version de `contexte__v<N>.md`, ou le document qu'elle tient elle-même si le contexte y renvoie —, son dossier `exemples/`, et ses **retours** (`retours__v<N>.md`, s'il existe) : les corrections durables déjà données, à appliquer d'office à chaque rédaction (conventions §19).
 2. **Détecte le corpus — automatiquement, sans que ce soit un mode** (seuils en conventions §13) :
    - **Corpus utile (≥ 5 exemples)** → écris **par analogie** avec les exemples les plus proches du sujet : leur structure, leur rythme, leur registre. Note lesquels tu as utilisés.
    - **Corpus maigre (1–4 exemples)** → appuie-toi sur ce qui existe, mais préviens : « le corpus est encore maigre (N posts) — la voix s'affinera à mesure qu'il grandit ».
@@ -26,6 +26,12 @@ Dans les deux cas **la marque doit être nommée**. Si elle ne l'est pas, demand
 4. **Image nécessaire ?** (Instagram toujours ; LinkedIn si le sujet le réclame ou si les Notes le précisent) → appelle le skill **image** — qui demande d'abord si l'utilisatrice fournit le visuel (sa bibliothèque `images/`), avant de décliner ou de générer (conventions §15) — puis renseigne dans l'en-tête `image` (le fichier Drive du visuel : bibliothèque ou archive) et `image_alt` — le texte alternatif est **à toi** : une phrase qui décrit le visuel, dans la langue et le ton de la marque (conventions §15). Si un hébergement est configuré et que le skill image a produit une URL publique, renseigne aussi `image_url`.
 5. **Dépose** le fichier dans `posts/<mois>/` de la marque, où `<mois>` est le mois de **parution voulue** (`AAAA-MM`) : nommage `AAAA-MM-JJ_canal_slug__v1.md`, format des conventions (§4–5), avec `exemples_utilises` et `version` renseignés. Crée le dossier mensuel s'il n'existe pas encore (création paresseuse), et vérifie toujours par `search_files` que le titre n'existe pas déjà (conventions §7). Pas de champ `check` : le verdict du gardefou ne se stocke pas dans un brouillon.
 6. **Toute réécriture est une nouvelle version.** Pour une idée à l'unité (entrée B) comme après un retour du gardefou (« plus court », « moins de jargon ») : relis la version courante, réécris, et dépose `__v<N+1>` — le fichier précédent reste en place, la version la plus haute fait foi. Itère jusqu'à ce que l'utilisatrice soit satisfaite.
+
+## Une correction peut devenir une mémoire — avec son accord
+
+- **Ponctuelle par défaut.** « Celui-ci, plus court » vaut pour ce post : nouvelle version, rien d'autre.
+- **Durable sur son oui, jamais sans.** Si elle formule la correction en général (« toujours trop long », « arrête les emojis ») — ou si tu remarques la même correction de batch en batch — propose : « Je le retiens pour tous les prochains posts de Camille ? » Sur son accord : lis la version courante de `retours__v<N>.md` (au premier retour, crée `retours__v1.md` — idempotence, conventions §7), ajoute une ligne (date + ses mots), écris la version **complète** `__v<N+1>` (conventions §19). Puis restitue la liste active : « Retenu. Tes retours pour Camille : … — dis-moi si l'un d'eux ne vaut plus. » Un retour dépassé ou contredit se retire par une nouvelle version sans la ligne.
+- **Un interdit n'est pas un retour.** Si sa remarque est un interdit concret et vérifiable (« jamais de promo sur les prix »), propose plutôt de l'ajouter aux **engagements** de la marque (→ onboarding) : les engagements sont contrôlés en dur par le gardefou, un retour non.
 
 ## Deux cas à signaler
 
@@ -43,4 +49,5 @@ Résume : combien de brouillons, pour quelles marques et quels canaux, lesquels 
 - Inventer un sujet, ou générer quoi que ce soit depuis un calendrier vide.
 - Modifier, déplacer ou supprimer un fichier existant : une réécriture est une nouvelle version, rien d'autre.
 - Écrire ailleurs que dans `posts/` : `planifie/` et `publie/` appartiennent au gardefou et à sync ; publier = gardefou.
-- Mélanger les voix : un batch multi-marques charge le contexte et le corpus **de chaque marque**, jamais un pot commun.
+- Mélanger les voix : un batch multi-marques charge le contexte, le corpus et les retours **de chaque marque**, jamais un pot commun.
+- Généraliser une correction sans son accord explicite : une remarque sur un post ne devient jamais silencieusement une règle pour les suivants.

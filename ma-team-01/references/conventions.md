@@ -26,6 +26,7 @@ Deux comportements du connecteur à connaître :
     contexte__v1.md
     channels__v1.md
     sujets__v1.md                           ← le calendrier, en markdown
+    retours__v1.md                          ← la mémoire des corrections durables (créé au premier retour, §19)
     exemples/                               ← le corpus, alimenté par l'utilisatrice
     images/                                 ← sa bibliothèque de photos et visuels, alimentée par elle seule
     posts/                                  ← tout ce qui a été écrit, versionné
@@ -58,7 +59,7 @@ Pour résoudre la version courante : `search_files` avec le `parentId` du dossie
 
 **Règle de réécriture** : une nouvelle version est un fichier **complet**, jamais un delta. On lit la version courante, on applique la modification en mémoire, on écrit l'ensemble dans `__v<N+1>`.
 
-Cette règle s'applique à : `config`, `roster`, `contexte`, `channels`, `sujets`, et les posts de `posts/`. Elle ne s'applique **pas** aux fichiers de `planifie/` et `publie/`, uniques par post (§5).
+Cette règle s'applique à : `config`, `roster`, `contexte`, `channels`, `sujets`, `retours`, et les posts de `posts/`. Elle ne s'applique **pas** aux fichiers de `planifie/` et `publie/`, uniques par post (§5).
 
 ## 4. Nommage des posts
 
@@ -197,6 +198,7 @@ Chaque emplacement n'a qu'un écrivain — et le geste est toujours **créer**, 
 | `config`, `roster` | setup, onboarding | tous |
 | `contexte`, `channels` | onboarding — **ou l'utilisatrice à la main** (voir ci-dessous) | creation, gardefou |
 | `sujets` | planning | creation |
+| `retours` | creation — sur accord explicite de l'utilisatrice (§19) | creation |
 | `exemples/` (corpus) | l'utilisatrice ; onboarding quand elle colle un post dans le chat | creation |
 | `images/` (bibliothèque) | l'utilisatrice, seule | image, creation, gardefou |
 | `posts/` | creation | tous |
@@ -295,3 +297,13 @@ La lenteur vient des allers-retours, pas du volume. Trois règles, valables pour
 - **Les lectures indépendantes se font en parallèle** : le corpus d'une marque, les quatre dossiers d'état d'un mois, les contextes de plusieurs marques d'un batch — rien n'impose de les lire l'un après l'autre.
 
 Aucune de ces règles ne change ce qui est écrit ni quand : elles ne touchent que le nombre d'appels pour lire la même vérité.
+
+## 19. Les retours — la mémoire des corrections
+
+Le corpus dit « écris comme ça » ; les retours disent « évite ça ». Ce sont les deux mémoires d'une marque, et elles s'alimentent de la même façon : par elle, jamais malgré elle.
+
+- **Une correction ponctuelle reste ponctuelle.** « Celui-ci, plus court » → nouvelle version du post, rien d'autre n'est écrit.
+- **Une correction durable se propose, ne s'impose pas.** Formulée en général (« toujours trop long », « arrête les emojis ») — ou remarquée comme récurrente d'un batch à l'autre — elle déclenche la question : « Je le retiens pour tous les prochains posts de Camille ? » Jamais de généralisation silencieuse : une remarque ne devient une règle que si elle le dit.
+- **Le fichier `retours__v<N>.md`** de la marque (versionné §3, créé paresseusement au premier retour) liste les retours actifs — une ligne chacun : date + ses mots. Creation le lit à chaque rédaction, avec le contexte et le corpus, et l'écrit seul (§8).
+- **La liste reste courte.** Un retour dépassé se retire (nouvelle version sans la ligne) ; un retour qui contredit un ancien le remplace. Quand on en ajoute un, on restitue la liste active — elle doit toujours voir ce que le système croit savoir de ses préférences.
+- **Frontière avec les engagements** : un retour est une préférence de style, appliquée par creation à la rédaction. Un interdit concret et vérifiable (« jamais de promo sur les prix ») est un **engagement** — il va dans le contexte (→ onboarding) et c'est le gardefou qui le contrôle. Sans cette frontière, `retours` deviendrait une seconde liste d'engagements que personne ne vérifie.
