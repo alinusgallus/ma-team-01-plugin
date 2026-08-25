@@ -1,6 +1,6 @@
 ---
 name: onboarding
-description: Ajoute une marque au portefeuille — part de la matière déjà écrite par l'utilisatrice (prompt, guide de rédaction, charte éditoriale) si elle en a une, crée son arborescence Drive, capture son contexte (ton, ligne éditoriale, engagements), enregistre ses canaux et leur mode de publication. Gère aussi le corpus par le chat, à tout moment. À utiliser quand l'utilisatrice dit « ajoute la marque X », « nouvelle marque », « voilà mon prompt / mon guide pour X », « ajoute ce post au corpus / aux exemples de X », ou pour retirer une marque du Roster.
+description: Ajoute une marque au portefeuille — part de la matière déjà écrite par l'utilisatrice (prompt, guide de rédaction, charte éditoriale) si elle en a une, crée son arborescence Drive, capture son contexte (ton, ligne éditoriale, engagements), enregistre ses canaux et leur mode de publication. Gère aussi le corpus par le chat, à tout moment. À utiliser quand l'utilisatrice dit « ajoute la marque X », « nouvelle marque », « voilà mon prompt / mon guide de rédaction / ma charte pour X » — toute remise d'un document de consignes pour une marque, même comme premier message —, « ajoute ce post au corpus / aux exemples de X », ou pour retirer une marque du Roster.
 ---
 
 # Onboarding — une marque entre au portefeuille

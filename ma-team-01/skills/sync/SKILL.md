@@ -1,6 +1,6 @@
 ---
 name: sync
-description: Rapproche Drive de la réalité — interroge Buffer pour savoir ce qui est effectivement paru et l'atteste en créant les fichiers publie/. À utiliser quand l'utilisatrice demande « qu'est-ce qui est parti ? », « mets à jour l'historique », « où en sont les publications ? », ou après une période de publications. Ne publie ni ne valide jamais rien : « publie », « valide », « envoie » = gardefou.
+description: Rapproche Drive de la réalité — interroge Buffer pour savoir ce qui est effectivement paru et l'atteste en créant les fichiers publie/. À utiliser quand l'utilisatrice demande « qu'est-ce qui est parti ? », « mets à jour l'historique », « où en sont les publications ? », ou après une période de publications — à invoquer même comme premier message, sans contexte : le skill lit Drive et interroge Buffer. Ne publie ni ne valide jamais rien : « publie », « valide », « envoie » = gardefou.
 ---
 
 # Sync — attester ce qui est paru, d'après la réalité

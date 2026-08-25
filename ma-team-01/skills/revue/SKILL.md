@@ -1,6 +1,6 @@
 ---
 name: revue
-description: Présente un batch d'un coup, en lecture seule — un tableau consolidé des posts depuis Drive, groupés par marque, avec l'état de chacun (brouillon, programmé, publié, annulé) déduit de la présence de sa clé dans les dossiers. À utiliser quand l'utilisatrice veut voir un batch (« montre-moi le batch », « où en est septembre ? », « qu'est-ce qui attend ma validation ? »). Vue seulement : si elle valide ou dit de publier/envoyer, c'est gardefou.
+description: Présente un batch d'un coup, en lecture seule — un tableau consolidé des posts depuis Drive, groupés par marque, avec l'état de chacun (brouillon, programmé, publié, annulé) déduit de la présence de sa clé dans les dossiers. À utiliser quand l'utilisatrice veut voir un batch (« montre-moi le batch », « où en est septembre ? », « qu'est-ce qui attend ma validation ? ») — même comme premier message, sans batch visible dans la conversation : la vue se construit depuis Drive. Vue seulement : si elle valide ou dit de publier/envoyer, c'est gardefou.
 ---
 
 # Revue — une vue, rien qu'une vue

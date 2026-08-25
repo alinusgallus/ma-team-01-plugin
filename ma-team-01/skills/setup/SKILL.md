@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Installation initiale du système, une seule fois — crée le dossier racine dans Google Drive, la configuration globale et le Roster des marques. À utiliser quand l'utilisatrice dit « installe le plugin Ma Team », « installe Ma Team », « installe le système », « mets en place le système », « démarre », « initialise », ou quand aucune racine n'existe encore dans son Drive.
+description: Installation initiale du système, une seule fois — crée le dossier racine dans Google Drive, la configuration globale et le Roster des marques. À utiliser quand l'utilisatrice dit « installe le plugin Ma Team », « installe Ma Team », « installe le système », « mets en place le système », « démarre », « initialise » — ou toute autre formulation d'installation ou de mise en place : invoquer, même comme premier message, plutôt que demander des précisions — ou quand aucune racine n'existe encore dans son Drive.
 ---
 
 # Setup — l'installation globale, une seule fois

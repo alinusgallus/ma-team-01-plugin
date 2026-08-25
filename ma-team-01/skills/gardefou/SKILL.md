@@ -1,6 +1,6 @@
 ---
 name: gardefou
-description: À invoquer dès que l'utilisatrice valide ou demande d'envoyer/publier — « ok publie », « valide le batch », « envoie », « c'est bon, publie le batch de septembre » — même en tout début de conversation, ainsi qu'après creation pour contrôler un batch. C'est la couche de sécurité, seule autorisée à écrire dans planifie/ : contrôle chaque brouillon (bonne marque ? engagement respecté ? image ?), restitue les posts sûrs et les posts signalés en conversation, puis pousse dans Buffer et atteste l'envoi en créant le fichier planifie/. Publier ou envoyer = gardefou ; constater ce qui est déjà parti = sync.
+description: À invoquer systématiquement, sans répondre d'abord, dès que l'utilisatrice valide ou demande d'envoyer/publier — « ok publie », « valide le batch », « envoie », « c'est bon pour moi, tu peux envoyer », « publie tout sauf le troisième » — même comme tout premier message et même si aucun batch n'est visible dans la conversation : le skill retrouve les brouillons dans Drive. À invoquer aussi après creation pour contrôler un batch. C'est la couche de sécurité, seule autorisée à écrire dans planifie/ : contrôle chaque brouillon (bonne marque ? engagement respecté ? image ?), restitue les posts sûrs et les posts signalés en conversation, puis pousse dans Buffer et atteste l'envoi en créant le fichier planifie/. Publier ou envoyer = gardefou ; constater ce qui est déjà parti = sync.
 ---
 
 # Gardefou — les contrôles en dur, puis la publication
