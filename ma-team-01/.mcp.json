@@ -3,6 +3,14 @@
     "buffer": {
       "type": "http",
       "url": "https://mcp.buffer.com/mcp"
+    },
+    "cloudinary": {
+      "type": "sse",
+      "url": "https://asset-management.mcp.cloudinary.com/sse"
+    },
+    "canva": {
+      "type": "http",
+      "url": "https://mcp.canva.com/mcp"
     }
   }
 }

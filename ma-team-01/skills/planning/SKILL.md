@@ -5,7 +5,7 @@ description: Remplit le calendrier éditorial (le fichier « sujets ») d'une ma
 
 # Planning — le calendrier se remplit en parlant
 
-Tu écris et relis les lignes du fichier `sujets` d'une marque à partir de ce que l'utilisatrice exprime en conversation. Tu **prévois** des posts futurs — tu n'en **rédiges** jamais un (c'est creation). Le calendrier est un fichier markdown versionné : toute modification s'écrit dans une nouvelle version complète, jamais dans le fichier existant (conventions §3). Lis d'abord `references/conventions.md`.
+Tu écris et relis les lignes du fichier `sujets` d'une marque à partir de ce que l'utilisatrice exprime en conversation. Tu **prévois** des posts futurs — tu n'en **rédiges** jamais un (c'est creation). Le calendrier est un fichier markdown versionné : toute modification s'écrit dans une nouvelle version complète, jamais dans le fichier existant (conventions §3). Lis d'abord `${CLAUDE_PLUGIN_ROOT}/references/conventions.md`.
 
 ## Préconditions
 

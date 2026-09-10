@@ -29,6 +29,8 @@ Deux comportements du connecteur à connaître :
     retours__v1.md                          ← la mémoire des corrections durables (créé au premier retour, §19)
     exemples/                               ← le corpus, alimenté par l'utilisatrice
     images/                                 ← sa bibliothèque de photos et visuels, alimentée par elle seule
+    visuels/                                ← constats d'hébergement, un fichier par visuel (§15), écrits par image
+      2026-09/
     posts/                                  ← tout ce qui a été écrit, versionné
       2026-09/                              ← dossier mensuel : AAAA-MM
     planifie/
@@ -40,7 +42,7 @@ Deux comportements du connecteur à connaître :
 ```
 
 - La racine s'appelle « Ma Team » par défaut (l'utilisatrice peut choisir un autre nom au setup). Tous les skills la localisent via le Roster/config — jamais par recherche de nom dans Drive. Si la racine n'existe pas : « On dirait que le système n'est pas encore installé — lance d'abord le setup. »
-- **Le dossier mensuel est indexé sur la date de parution voulue**, pas sur la date de création. Un post écrit le 8 août pour le 10 septembre va dans `2026-09/`. Les quatre dossiers `posts/`, `planifie/`, `publie/`, `annule/` répliquent la même structure mensuelle.
+- **Le dossier mensuel est indexé sur la date de parution voulue**, pas sur la date de création. Un post écrit le 8 août pour le 10 septembre va dans `2026-09/`. Les cinq dossiers `visuels/`, `posts/`, `planifie/`, `publie/`, `annule/` répliquent la même structure mensuelle.
 - **Création paresseuse** : un dossier mensuel n'est créé qu'au moment d'y déposer le premier fichier — après vérification d'existence (§7).
 - `posts/` contient **tout ce qui a été écrit**, y compris ce qui est déjà paru — le nom dit la vérité à l'utilisatrice.
 - Le calendrier `sujets` est un fichier **markdown versionné**, pas un Google Sheet : le connecteur sait créer un Sheet, pas y écrire une ligne. Le markdown reste lisible par l'utilisatrice dans Drive.
@@ -59,7 +61,7 @@ Pour résoudre la version courante : `search_files` avec le `parentId` du dossie
 
 **Règle de réécriture** : une nouvelle version est un fichier **complet**, jamais un delta. On lit la version courante, on applique la modification en mémoire, on écrit l'ensemble dans `__v<N+1>`.
 
-Cette règle s'applique à : `config`, `roster`, `contexte`, `channels`, `sujets`, `retours`, et les posts de `posts/`. Elle ne s'applique **pas** aux fichiers de `planifie/` et `publie/`, uniques par post (§5).
+Cette règle s'applique à : `config`, `roster`, `contexte`, `channels`, `sujets`, `retours`, et les posts de `posts/`. Elle ne s'applique **pas** aux fichiers de `planifie/` et `publie/`, uniques par post (§5), ni aux constats de `visuels/`, uniques par (clé, version du post) — leur suffixe `__v<N>` reprend la version du post qui introduit le visuel, il ne se résout pas au maximum (§5, §15).
 
 ## 4. Nommage des posts
 
@@ -84,9 +86,10 @@ canal: linkedin
 date: 2026-09-10            ← date de parution voulue
 theme: lancement-produit-x
 sujet: retour d'expérience sur le lancement
-image: aucune | <chemin Drive du visuel archivé>
-image_alt: <texte alternatif, si image — écrit par creation>
-image_url: <URL publique, seulement si un hébergement est configuré (§15) — sinon absent>
+image: aucune | <chemin du constat dans visuels/ — ex. visuels/2026-09/2026-09-15_linkedin_salon__v2.md>
+image_source: fournie | canva | retouch | generate    ← absent si le post n'a pas de visuel
+image_alt: <texte alternatif, si visuel — écrit par creation>
+image_url: <URL publique de livraison, recopiée du constat — absent si hébergement `aucun` (§15)>
 exemples_utilises: <noms des posts du corpus mobilisés, ou « aucun — écrit sans exemples »>
 version: 2
 ---
@@ -94,7 +97,41 @@ version: 2
 <le texte du post, prêt à publier>
 ```
 
+**Un post déclare un visuel dès que `image_source` est renseigné.** C'est ce champ — et non `image:` — qui déclenche le flag du gardefou (validation individuelle) et la vérification média de sync : il est présent même quand l'hébergement n'a pas eu lieu (`hebergement_images: aucun`), là où `image:` vaut `aucune` et `image_url` est absent. Quand un hébergement a eu lieu, `image:` pointe **toujours** le fichier de constat (§15), quelle que soit la provenance : ce que le post référence est l'acte d'hébergement, et l'aval (gardefou, revue, sync) ne connaît qu'un seul cas.
+
 Pas de champ `check` : le verdict du gardefou ne se stocke pas dans un brouillon (§6).
+
+### `visuels/<mois>/<clé>__v<N>.md` — écrit par image, **après** confirmation de l'hébergeur
+
+`N` est la **version du post qui introduit ce visuel** (la version que creation s'apprête à écrire). Une version ultérieure du post qui garde le même visuel pointe le même fichier ; un nouveau visuel crée `__v<N'>` avec la version qui le porte. Les trous dans la numérotation sont normaux.
+
+```
+---
+marque: camille
+canal: linkedin
+date: 2026-09-15
+cle: 2026-09-15_linkedin_salon
+version_post: 2
+source: fournie | canva | retouch | generate
+origine: images/IMG_4821.jpg          ← fournie : le fichier Drive ; canva : le titre du design ; retouch : le public_id dérivé ; generate : « générée »
+drive_file_id: <id Drive du fichier d'origine, si fournie>
+drive_md5: <md5Checksum du fichier Drive au moment de l'hébergement, si fournie>
+canva_design_id: <ID du design, si canva>
+canva_updated_at: <updated_at du design au moment de l'export, si canva>
+canva_pages: <pages exportées, si canva et design multipage>
+hebergeur: cloudinary
+public_id: ma-team/camille/2026-09-15_linkedin_salon__v2
+image_url: https://res.cloudinary.com/<cloud>/image/upload/ma-team/camille/2026-09-15_linkedin_salon__v2.jpg
+format: jpg
+dimensions: 2048x1536
+poids: 412 Ko
+heberge_le: 2026-09-10T08:41:00Z
+---
+
+<image_alt proposé au moment de l'hébergement — repris tel quel ou retouché par creation dans le post>
+```
+
+Ce fichier est **la preuve de ce qui a été hébergé, et de quel original**. Il ne se modifie jamais, ne se lit pas à la main, et n'est pas versionné au sens du §3 : chaque fichier est unique par (clé, version du post). C'est le `drive_md5` (ou le `canva_updated_at`) qui rend détectable une modification ultérieure de l'original (§15).
 
 ### `planifie/<mois>/<clé>.md` — écrit par gardefou, **après** confirmation de Buffer
 
@@ -107,8 +144,9 @@ canal: linkedin
 date: 2026-09-10
 theme: lancement-produit-x
 version_source: 2                    ← quelle version de posts/ a été envoyée
-image: aucune | <chemin Drive du visuel>
-image_alt: <texte alternatif, si image>
+image: aucune | <chemin du constat dans visuels/>
+image_source: fournie | canva | retouch | generate    ← absent si pas de visuel
+image_alt: <texte alternatif, si visuel>
 image_url: <URL envoyée à Buffer, si hébergement — sinon absent>
 check: safe | flagged
 check_raison: <en clair, si flagged et validé quand même>
@@ -201,6 +239,7 @@ Chaque emplacement n'a qu'un écrivain — et le geste est toujours **créer**, 
 | `retours` | creation — sur accord explicite de l'utilisatrice (§19) | creation |
 | `exemples/` (corpus) | l'utilisatrice ; onboarding quand elle colle un post dans le chat | creation |
 | `images/` (bibliothèque) | l'utilisatrice, seule | image, creation, gardefou |
+| `visuels/` (constats d'hébergement) | image | creation, gardefou, revue, sync |
 | `posts/` | creation | tous |
 | `planifie/` | gardefou | revue, sync |
 | `annule/` | sync | revue |
@@ -233,7 +272,7 @@ Deux conséquences concrètes, vérifiées en conditions réelles :
 
 ## 12. Authentification
 
-Les autorisations MCP (Drive, Buffer) sont faites une fois par l'utilisatrice dans l'interface de Cowork. **Aucun skill ne pilote une connexion.** Les skills vérifient seulement l'accessibilité et produisent un message clair si un canal n'est pas connecté (voir `erreurs.md`).
+Les autorisations MCP (Drive, Buffer, l'hébergement des visuels — Cloudinary —, Canva) sont faites une fois par l'utilisatrice dans l'interface de Cowork. **Aucun skill ne pilote une connexion.** Les skills vérifient seulement l'accessibilité et produisent un message clair si un canal n'est pas connecté (voir `erreurs.md`).
 
 ## 13. Le corpus (`exemples/`)
 
@@ -246,27 +285,40 @@ Les autorisations MCP (Drive, Buffer) sont faites une fois par l'utilisatrice da
 
 Tout ce que l'utilisatrice lit est en **français**, dans le vocabulaire de `vocabulaire.md`. Jamais de message technique brut : toute erreur passe par le gabarit d'`erreurs.md`.
 
-## 15. Images — comment un visuel arrive dans Buffer
+## 15. Visuels — de Drive (ou Canva) à Buffer, par URL
 
-Deux faits techniques commandent tout le reste :
+Le principe qui commande tout : **le système ne manipule jamais un octet d'image.** Il ne fait que désigner des URL à des services qui se parlent entre eux — Drive → hébergeur → Buffer. Aucun fichier d'image ne transite par la session : ni téléchargement, ni base64, ni fichier local — la voie a été testée et fermée (l'egress de la session est refusé par politique d'organisation ; les appels MCP, eux, passent).
 
-1. Buffer n'a **pas d'envoi de fichier** : un média ne se référence que par **URL publique directe** (HTTPS, sans authentification, pointant sur le fichier — pas une page de prévisualisation). **Un lien Drive n'est jamais une URL de média valable.**
-2. Buffer ne copie pas le média à la création du post : il **va le chercher au moment de la parution** — des semaines plus tard pour un batch. Une URL morte entre-temps casse le post, alors que le fichier `planifie/` atteste un envoi réussi. À l'inverse, un média déposé **dans l'interface de Buffer** est stocké par Buffer : aucune fragilité à la parution.
+Trois faits techniques :
 
-La config globale porte la clé **`hebergement_images`** (dans `config__v<N>.md`) :
+1. Buffer n'a **pas d'envoi de fichier** : un média se référence par **URL publique directe, stable, non signée**, que Buffer sonde à la création du post et **re-télécharge à la parution** — des semaines plus tard pour un batch. Une URL expirable ou morte entre-temps casse le post. **Un lien Drive n'est jamais une URL de média valable.** À l'inverse, un média déposé **dans l'interface de Buffer** est stocké par Buffer : aucune fragilité à la parution.
+2. **L'hébergeur (Cloudinary, par MCP) sait aller chercher une image à une URL** (fetch unique, de son côté) et la servir ensuite à une URL publique **sans expiration** (`type: upload`, aucun `access_control`). C'est l'adaptateur du système : il transforme une URL de source — un fichier Drive ouvert en lecture par lien, un export Canva signé et expirable — en URL permanente pour Buffer.
+3. **Drive est le seul endroit où une photo de l'utilisatrice peut se trouver à une URL.** L'app Drive du téléphone (galerie → Partager → Drive → `images` de la marque) y dépose l'original ; `share_file` l'ouvre en lecture par lien ; l'hébergeur va la chercher. Le connecteur expose la somme de contrôle du fichier (`md5Checksum`) — c'est ce qui rend une modification ultérieure détectable.
 
-- **`aucun`** (défaut) — le visuel est archivé dans Drive à côté du post ; le **texte part seul** à Buffer, et l'utilisatrice attache le visuel **dans l'interface de Buffer**, au moment où elle valide le post — guidée par le gardefou. Le composer de Buffer sait **piocher le fichier directement dans Google Drive** (intégration à autoriser une fois dans Buffer ; sur ordinateur seulement, un fichier à la fois) : pas de téléchargement local, le visuel part de la bibliothèque `images/` ou de l'archive vers Buffer en un geste, et il est alors stocké par Buffer. C'est le mode prévu tant que les posts à visuel restent minoritaires (LinkedIn).
-- **Un hébergeur nommé** (prévu pour la phase Instagram) — le skill image dépose le visuel chez l'hébergeur et renseigne `image_url` : une URL publique et **stable** (jamais une URL signée ou expirable). Le gardefou vérifie qu'elle répond sans authentification, puis l'envoie **dans le même push** que le texte.
+La config globale porte **`hebergement_images: aucun | cloudinary`**, posée **par détection au setup** (le MCP Cloudinary répond → `cloudinary`, sinon `aucun`). En `aucun` : le visuel n'est pas hébergé, le **texte part seul** à Buffer, et l'utilisatrice attache le visuel **dans l'interface de Buffer** au moment où elle valide — guidée par le gardefou (le composer de Buffer sait piocher le fichier directement dans Google Drive ; sur ordinateur, intégration à autoriser une fois). Le post **déclare** quand même son visuel (`image_source`, `image_alt` — §5) : le gardefou le flagge et sync vérifie l'attache, dans les deux modes.
 
-**D'où vient le visuel** — trois sources, dans cet ordre de préférence :
+**Quatre provenances** — les deux siennes en premier, ce qu'elle donne prime sur ce qu'on décline, qui prime sur ce qu'on génère :
 
-1. **Fournie** — l'utilisatrice a déjà l'image : elle vit dans la bibliothèque `images/` de la marque (ou elle l'y dépose sur le moment). On l'utilise telle quelle, `image` pointe dessus — pas de copie : le fichier est déjà dans Drive. C'est la source la plus sûre du circuit : rien à créer côté connecteur.
-2. **Déclinée** (retouch) — une variation d'une image de la bibliothèque (recadrage, habillage), quand elle a de la matière mais pas le visuel exact. Le résultat s'archive à côté du post.
-3. **Générée** — de zéro, seulement si la bibliothèque n'offre rien et que le sujet s'y prête.
+1. **`fournie`** — la photo est dans `images/` de la marque, déposée par elle (téléphone ou ordinateur, via Drive). Chaîne : `share_file` (lecture par lien — le fichier ne bouge pas, seule sa visibilité change) → URL de téléchargement direct → upload chez l'hébergeur.
+2. **`canva`** — un design de son compte Canva, désigné par son **titre**, exporté par MCP (JPEG, l'URL d'export est signée et expirable — fatale pour Buffer, inoffensive pour l'hébergeur qui la fetche une fois).
+3. **`retouch`** — dérivée d'un asset déjà hébergé, **côté hébergeur** (`transform-asset`), sous un nouveau `public_id`.
+4. **`generate`** — créée par l'hébergeur, en dernier recours.
 
-Quand un post réclame un visuel, on lui demande **d'abord** si elle a une image — générer est le recours, pas le défaut. La bibliothèque `images/` suit la règle du corpus : elle y dépose (ordinateur ou téléphone, via Drive), aucun skill n'y écrit ni n'y supprime. Une image collée dans le chat sert à en parler et à écrire l'`image_alt`, mais on lui demande de la déposer aussi dans `images/` : c'est le fichier Drive que `image` peut pointer, et ce pointeur est ce qui déclenche le flag du gardefou et la vérification de sync.
+Il n'existe pas de provenance « jointe dans le chat » : une photo dans le chat est un **signal** (laquelle, pour quel post, quel texte alternatif), jamais une **source** — on lui demande de la déposer aussi dans `images/`, en une phrase.
 
-Dans tous les cas : `image` (le fichier dans Drive — bibliothèque ou archive) et `image_alt` (texte alternatif, écrit par creation dans la langue de la marque) sont renseignés dans le post et recopiés dans `planifie/`. Et **sync** vérifie côté Buffer que les posts déclarant un visuel en portent bien un — y compris ceux encore en file, pour rattraper un oubli avant la date de parution.
+**Le rattachement ne se devine jamais.** « La photo que je viens de mettre » → le fichier le plus récent de `images/`, **nommé en retour** pour qu'elle confirme d'un mot ; plusieurs candidats → question d'une ligne. Un design Canva → recherche par titre, nommé en retour avec sa date de modification. Jamais « la dernière photo va au dernier post ».
+
+**L'hébergement a lieu à la création du visuel, pas à l'envoi.** C'est ce qui permet au gardefou de **montrer l'image réelle** au moment de la validation — sur un canal `auto`, la validation est le dernier regard humain. Coût accepté : les visuels de brouillons jamais envoyés restent hébergés. Conséquence à dire une fois par marque (à la première photo hébergée) : une photo utilisée devient **visible sur internet**, même si le post ne part jamais — les URL ne sont pas devinables, elles ne sont pas secrètes.
+
+**La trace est un constat** : `visuels/<mois>/<clé>__v<N>.md` (format §5), écrit par image **après** confirmation de l'hébergeur — le miroir de « Buffer d'abord, fichier ensuite » (§7) : désigner (confirmé par elle), obtenir l'URL source, héberger, vérifier la réponse, **puis** créer le constat, **puis** la version du post. Échec d'hébergement → rien n'est écrit, le post reste sans image (l'attache manuelle dans Buffer reste le secours, post par post). Le constat enregistre le `drive_md5` (ou le `canva_updated_at`) de l'original.
+
+**Le contrôle de dérive** : la photo de `images/` est à elle, éditable — si elle la retouche dans Drive après l'hébergement, le post garde l'ancienne URL. On ne peut pas empêcher l'édition ; on la **détecte** : gardefou (avant tout envoi, bloquant) et revue comparent la somme courante (`get_file_metadata`) au `drive_md5` du constat — même mécanisme pour un design Canva avec son `updated_at`. Écart → « photo modifiée dans Drive depuis l'hébergement — je réhéberge ? » ; rien ne part sans sa réponse (réhéberger = nouvelle version + nouveau constat ; ou garder l'ancienne). Original supprimé de Drive ou de Canva → l'asset hébergé reste valable ; le dire, sans bloquer.
+
+**Chez l'hébergeur** : `public_id` déterministe `ma-team/<marque>/<clé>__v<N>` — miroir du constat, `overwrite: false` : un second upload du même (clé, version) est refusé sans dommage, c'est l'idempotence du §7 transposée. Image **normalisée à l'upload** : JPEG, 2048 px de côté maximum, métadonnées retirées (jamais d'EXIF ni de position GPS servis publiquement) ; au-delà de 10 Mo, l'offre gratuite refuse. **Rien n'est jamais supprimé chez l'hébergeur** (§1 y vaut aussi), aucune déduplication : la même photo pour deux posts donne deux assets — chaque post est autonome. Changement de date d'un post à visuel → nouvelle clé, visuel **ré-hébergé sous la nouvelle clé** depuis sa propre URL, nouveau constat qui reprend le `drive_md5` de l'ancien, sans nouvelle question.
+
+Dans tous les cas : `image` (le constat), `image_source`, `image_alt` (écrit par creation dans la langue de la marque) et `image_url` sont renseignés dans le post et recopiés dans `planifie/`. Le gardefou envoie l'image **dans le même push** que le texte (le contrôle d'accessibilité de l'URL se fait par la réponse de Buffer, qui la sonde à la création). Et **sync** vérifie côté Buffer que les posts déclarant un visuel en portent bien un — y compris ceux encore en file, pour rattraper un oubli avant la date de parution.
+
+Hors périmètre, sciemment : plusieurs visuels par post (carrousels), le réglage par canal de l'hébergement, toute suppression ou purge chez l'hébergeur.
 
 ## 16. Modes de publication par canal (selon ce que Buffer permet)
 

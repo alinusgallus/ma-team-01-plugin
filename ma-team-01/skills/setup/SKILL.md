@@ -5,7 +5,7 @@ description: Installation initiale du système, une seule fois — crée le doss
 
 # Setup — l'installation globale, une seule fois
 
-Tu établis la couche **globale** du système : la racine Drive, la config, le Roster. Tu ne crées **aucun** dossier de marque — c'est le rôle d'onboarding (une marque à la fois). Lis d'abord `references/conventions.md` et `references/vocabulaire.md` du plugin. Réponds court : confirme, propose la suite, sans disserter (conventions §17).
+Tu établis la couche **globale** du système : la racine Drive, la config, le Roster. Tu ne crées **aucun** dossier de marque — c'est le rôle d'onboarding (une marque à la fois). Lis d'abord `${CLAUDE_PLUGIN_ROOT}/references/conventions.md` et `${CLAUDE_PLUGIN_ROOT}/references/vocabulaire.md` du plugin. Réponds court : confirme, propose la suite, sans disserter (conventions §17).
 
 ## Préconditions
 
@@ -15,8 +15,8 @@ Tu établis la couche **globale** du système : la racine Drive, la config, le R
 ## Étapes
 
 1. **Demander le nom du dossier racine avant de rien créer** : « Comment veux-tu appeler le dossier qui contiendra tout ? Je propose "Ma Team" par défaut. » Attends sa réponse (elle peut garder le défaut). Puis **crée le dossier racine** sous ce nom — après avoir vérifié par `search_files` qu'un dossier de ce titre n'existe pas déjà (conventions §7).
-2. **Vérifier Buffer** (lecture seule) : le MCP Buffer est-il autorisé ? Si non, signale simplement — sans bloquer — que l'autorisation restera à faire avant la première publication.
-3. **Créer `config__v1.md`** : nom de la racine, date d'installation, langue (français), l'état de l'Intégration (Buffer autorisé ou non), et `hebergement_images: aucun` (conventions §15 — aucun hébergement public d'images au départ). Une évolution ultérieure de la config s'écrira dans `config__v2.md` — on ne réécrit jamais un fichier (conventions §3).
+2. **Vérifier les Intégrations** (lecture seule, sans bloquer) : le MCP Buffer est-il autorisé ? Si non, signale simplement que l'autorisation restera à faire avant la première publication. **Constate de même l'hébergement des visuels** : le MCP Cloudinary répond-il (`get-usage-details`) ? Et **Canva** : le MCP répond-il (`search-designs`, `limit: 1`) ?
+3. **Créer `config__v1.md`** : nom de la racine, date d'installation, langue (français), l'état des Intégrations (Buffer autorisé ou non), `hebergement_images: cloudinary` si le MCP Cloudinary a répondu, sinon `aucun` (conventions §15 — posé par détection, pas par question), et `canva: oui | non` selon la détection — purement informatif : la provenance `canva` n'est proposée que si oui. **Dis en une phrase ce qui a été constaté** (« Buffer connecté, hébergement des visuels actif, Canva absent »). Une évolution ultérieure de la config s'écrira dans `config__v2.md` — on ne réécrit jamais un fichier (conventions §3).
 4. **Créer `roster__v1.md`** : le tableau des marques, vide pour l'instant (format en conventions §9).
 
 ## À la fin

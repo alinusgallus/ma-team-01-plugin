@@ -5,7 +5,7 @@ description: Présente un batch d'un coup, en lecture seule — un tableau conso
 
 # Revue — une vue, rien qu'une vue
 
-Tu rends **visible** l'état d'un batch tel qu'il est dans Drive. Tu n'écris rien, tu ne décides rien : tu lis les dossiers, tu **interroges Buffer en lecture** pour les posts programmés, et tu **déduis** l'état de chaque post selon la règle des conventions (§6). Lis d'abord `references/conventions.md`.
+Tu rends **visible** l'état d'un batch tel qu'il est dans Drive. Tu n'écris rien, tu ne décides rien : tu lis les dossiers, tu **interroges Buffer en lecture** pour les posts programmés, et tu **déduis** l'état de chaque post selon la règle des conventions (§6). Lis d'abord `${CLAUDE_PLUGIN_ROOT}/references/conventions.md`.
 
 ## Construire la vue
 
@@ -15,12 +15,14 @@ Pour le périmètre demandé (période / marque / thème) :
 2. Déduis l'état par clé `date_canal_slug` : dans `publie/` → **publié** ; sinon dans `annule/` → **annulé** ; sinon dans `planifie/` → **programmé** ; sinon → **brouillon**. Le dossier le plus avancé gagne (§6).
 3. **Vérifie les programmés auprès de Buffer** (lecture seule — la seconde vérification prévue au §6) : **par lot, pas post par post** (conventions §18) — liste les posts du canal côté Buffer et rapproche les `buffer_id` des fichiers `planifie/` ; n'interroge individuellement que les absents de la liste, pour confirmer. Un post que Buffer ne connaît plus ne se présente pas comme programmé sûr : marque-le « à réconcilier — semble retiré de Buffer » et invite à lancer sync (qui écrira `annule/`). Tu n'écris rien toi-même.
 4. Pour un post programmé, compare `version_source` (en-tête du fichier `planifie/`) à la version courante dans `posts/` : si elle est plus ancienne, signale « la version programmée n'est plus la dernière » (message d'`erreurs.md`).
+5. **Contrôle de dérive des visuels** (conventions §15) : pour chaque post dont le constat `visuels/` porte un `drive_md5`, relis `get_file_metadata` du `drive_file_id` — somme différente → mention « photo modifiée dans Drive ». Constat `canva` : `updated_at` du design postérieur à `canva_updated_at` → mention « design modifié dans Canva ». Tu signales, tu n'écris rien — la réponse (réhéberger ou garder) se donne au gardefou avant l'envoi.
 
 ## Rendu
 
 Construis un Artifact consolidé, **groupé par marque** — jamais de mélange de voix dans une même section :
 
-1. **Les brouillons d'abord.** Date, canal, sujet, le texte (dernière version), la mention « écrit sans exemples » le cas échéant. Si le gardefou vient de contrôler ces posts dans la conversation, reprends ses verdicts : les sûrs ensemble (présentés pour une validation en bloc), puis les signalés un par un, chacun avec sa raison en clair (« pourrait contredire l'engagement : … », « contient une image », « doute sur la marque ») et l'image affichée s'il y en a une. Sinon, montre-les comme « pas encore contrôlés » — ne les présente jamais comme sûrs, et n'invente pas de verdict : il n'est stocké nulle part pour un brouillon.
+1. **Les brouillons d'abord.** Date, canal, sujet, le texte (dernière version), la mention « écrit sans exemples » le cas échéant. Si le gardefou vient de contrôler ces posts dans la conversation, reprends ses verdicts : les sûrs ensemble (présentés pour une validation en bloc), puis les signalés un par un, chacun avec sa raison en clair (« pourrait contredire l'engagement : … », « contient un visuel », « doute sur la marque ») et l'image affichée s'il y en a une. Sinon, montre-les comme « pas encore contrôlés » — ne les présente jamais comme sûrs, et n'invente pas de verdict : il n'est stocké nulle part pour un brouillon.
+   **Colonne visuel**, pour tous les états : `—`, `fournie`, `canva`, `retouch` ou `generate` (depuis `image_source`), l'image en vignette (par son `image_url`) si la vue le permet, et la mention « photo modifiée dans Drive » / « design modifié dans Canva » quand le contrôle de dérive a détecté un écart.
 2. **Les programmés.** Date d'envoi (`envoye_le`), verdict figé dans le fichier `planifie/`, et l'écart de version s'il existe.
 3. **Les publiés.** L'historique du périmètre, en bref.
 4. **Les annulés / à réconcilier.** Les posts retirés de Buffer (`annule/`) : une ligne chacun (« envoyé le X, retiré depuis »). Et ceux que Buffer ne connaît plus mais que Drive croit encore programmés : « à réconcilier — lance sync ».

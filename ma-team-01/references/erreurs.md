@@ -33,8 +33,32 @@ Chaque erreur suit trois temps, en français simple :
 **Image manquante pour Instagram**
 > Ce post Instagram n'a pas d'image, et Instagram n'accepte pas de post sans image. Tu as une photo pour lui ? Dépose-la dans le dossier `images` de la marque et dis-le-moi. Sinon je peux partir d'une de tes photos, ou en générer une — ou tu passes ce post en mode rappel.
 
+**Photo dans le chat, pas dans Drive**
+> J'ai bien ta photo ici, mais je ne peux l'utiliser que depuis ton Drive. Partage-la depuis ta galerie vers le dossier `images` de Camille (Partager → Drive), puis dis-moi « c'est fait » — je m'occupe du reste.
+
+**Hébergement impossible**
+> Je n'ai pas réussi à mettre cette photo en ligne — le post est là, mais sans visuel pour l'instant. Dis-moi « réessaie avec la photo » dans un moment, ou valide le post et attache la photo toi-même dans Buffer, comme avant.
+
+**Photo trop lourde**
+> Cette photo dépasse la taille que l'hébergement accepte (10 Mo). Renvoie-la dans Drive en choisissant « taille réduite » au moment du partage, ou envoie-moi une autre prise.
+
+**Photo modifiée dans Drive depuis l'hébergement** *(variante : design modifié dans Canva depuis l'export)*
+> La photo du post du 15/09 a été modifiée dans Drive après que je l'ai mise en ligne — le post porte encore l'ancienne version. Je remplace par la nouvelle ? Dis-moi « oui » ou « garde l'ancienne ». Le post ne part pas avant.
+
+**Design Canva introuvable**
+> Je ne trouve pas de design « Rejoignez le mouvement » dans ton Canva — les titres proches : « Rejoignez-nous », « Mouvement septembre ». Dis-moi lequel, ou son titre exact.
+
+**Hébergement non activé (avertissement, une fois par marque)**
+> Les visuels de Camille s'attacheront dans Buffer au moment de la validation : l'hébergement automatique n'est pas activé. Si tu veux que je m'en occupe à ta place, autorise le connecteur d'images dans les réglages de Claude et dis-moi « active l'hébergement ».
+
+**Constat manquant après hébergement**
+> La photo est en ligne, mais je n'ai pas pu en garder la trace dans ton Drive — je préfère m'arrêter là plutôt que de créer un post bancal. Dis-moi « réessaie » dans un instant.
+
 **Visuel non attaché (rappel, pas une erreur)**
 > Le post LinkedIn de Camille du 10/09 est programmé dans Buffer, mais son visuel n'y est pas encore attaché. L'image est prête dans Drive — ouvre le post dans Buffer, ajoute-la (dans le composer, tu peux la prendre directement depuis Google Drive), et dis-moi « c'est fait ». S'il part comme ça, il paraîtra en texte seul.
+
+**Visuel non attaché — variante quand le visuel est hébergé (`image_url` présent)**
+> Le post LinkedIn de Camille du 15/09 est programmé dans Buffer, mais sans son image alors qu'elle est prête en ligne. Dis-moi « renvoie le visuel » et je corrige le post en file ; sinon il paraîtra en texte seul.
 
 **URL d'image inaccessible**
 > Le visuel de ce post est hébergé à une adresse qui ne répond pas publiquement — Buffer ne pourrait pas le récupérer au moment de la parution. Le post n'est pas parti, rien n'est perdu. Dis-moi si je réessaie avec un autre hébergement, ou si tu préfères l'attacher toi-même dans Buffer.

@@ -5,7 +5,7 @@ description: Rapproche Drive de la réalité — interroge Buffer pour savoir ce
 
 # Sync — attester ce qui est paru, d'après la réalité
 
-Tu confirmes les parutions **effectives** et tu avances l'historique : tu es le seul à créer dans `publie/` et `annule/` (conventions §8). Tu ne modifies, ne déplaces et ne supprimes rien — tu crées, c'est tout : Drive dit ce qui a été envoyé, Buffer dit ce qu'il en advient, et toi tu graves la confirmation. Lis d'abord `references/conventions.md`.
+Tu confirmes les parutions **effectives** et tu avances l'historique : tu es le seul à créer dans `publie/` et `annule/` (conventions §8). Tu ne modifies, ne déplaces et ne supprimes rien — tu crées, c'est tout : Drive dit ce qui a été envoyé, Buffer dit ce qu'il en advient, et toi tu graves la confirmation. Lis d'abord `${CLAUDE_PLUGIN_ROOT}/references/conventions.md`.
 
 ## Étapes
 
@@ -15,8 +15,8 @@ Tu confirmes les parutions **effectives** et tu avances l'historique : tu es le 
 4. **Confirmé paru** → crée `publie/<mois>/<clé>.md` (format en conventions §5) : les mêmes champs que le fichier `planifie/`, plus `publie_le`. Crée le dossier mensuel s'il n'existe pas, et vérifie d'abord que le fichier n'existe pas déjà (idempotence, conventions §7). L'historique de la marque se construit par ajout.
 5. **Pas encore parti** (date future, file d'attente) → ne crée rien, sans bruit.
 6. **Cas `rappel` / publication native** : Buffer ne sait pas toujours ce qui a été publié à la main depuis le téléphone. Pour ces posts, demande simplement : « Le post Instagram de Camille du 12/09, tu l'as publié ? » — sa confirmation vaut vérité, et tu crées le fichier `publie/` (avec la date qu'elle indique, ou la date prévue à défaut). Sans réponse, rien n'est créé : mieux vaut un historique incomplet qu'un historique inventé.
-7. **Posts avec visuel** (conventions §15) : pour chaque fichier `planifie/` dont l'en-tête déclare une image, vérifie auprès de Buffer que le post porte bien un média — **y compris les posts encore en file**, pas seulement les parus.
-   - **En file, sans média** → rappel doux, message « visuel non attaché » d'`erreurs.md` : le visuel est dans Drive, il suffit de l'attacher dans Buffer avant la date. C'est le moment de rattraper l'oubli.
+7. **Posts avec visuel** (conventions §15) : pour chaque fichier `planifie/` dont l'en-tête déclare un visuel (`image_source` renseigné), vérifie auprès de Buffer que le post porte bien un média — **y compris les posts encore en file**, pas seulement les parus. Quand l'en-tête porte une `image_url`, compare : un asset **absent ou d'une autre URL** est un visuel non attaché.
+   - **En file, sans média (ou avec un autre)** — `image_url` présente → variante hébergée du message « visuel non attaché » d'`erreurs.md` : l'image est prête en ligne, propose « renvoie le visuel » pour corriger le post en file. Sans `image_url` (hébergement `aucun`) → rappel doux, message « visuel non attaché » classique : le visuel est dans Drive, il suffit de l'attacher dans Buffer avant la date.
    - **Paru, sans média** → anomalie : dis-le en clair (le post est paru en texte seul). Le fichier `publie/` se crée quand même — il atteste la parution, pas sa complétude.
 8. **Post retiré de Buffer** — un `buffer_id` que Buffer ne connaît plus, alors que le post n'est pas dans `publie/` : c'est une **annulation** (supprimé dans Buffer, rejeté par le canal). Crée `annule/<mois>/<clé>.md` (format §5) — dossier mensuel créé au besoin, idempotence d'abord (§7) — en reprenant `buffer_id` et `envoye_le` du fichier `planifie/`, avec `annule_le`, `constate_par: sync`, et la `raison` si tu la connais. Dis-le en clair : le post redevient un brouillon dans `posts/`, il faudra une nouvelle date pour le renvoyer (message « post retiré de Buffer » d'`erreurs.md`). Ne supprime **jamais** le fichier `planifie/` (rien n'est supprimé) — c'est `annule/` qui prime désormais dans la déduction (§6).
 
@@ -30,7 +30,7 @@ Ajoute au corpus **uniquement** les posts qu'elle désigne : « validé » ne ve
 
 ## À la fin
 
-Résume par marque : combien confirmés publiés, combien encore en file, combien en attente de sa confirmation (mode rappel), et toute anomalie.
+Résume par marque : combien confirmés publiés, combien encore en file, combien en attente de sa confirmation (mode rappel), et toute anomalie. Ajoute **une ligne de mesure** sur les visuels : « N visuels hébergés pour des posts jamais partis » — les constats de `visuels/` dont la clé n'a jamais atteint `planifie/`. Information, pas action : rien ne se supprime chez l'hébergeur (conventions §15) ; un ménage éventuel est un geste de l'utilisatrice dans la console de l'hébergeur, jamais du système.
 
 ## Ce que tu ne fais jamais
 
